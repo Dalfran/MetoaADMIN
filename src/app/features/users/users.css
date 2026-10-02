@@ -560,3 +560,32 @@ tbody tr:hover {
   }
 
 }
+/* ========================================
+   ACTIONS
+======================================== */
+
+.actions-cell {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.view-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 13px;
+  border-radius: 8px;
+  background: #eef0f8;
+  color: #0c1230;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.view-button:hover {
+  background: #0c1230;
+  color: #ffffff;
+  transform: translateY(-1px);
+}

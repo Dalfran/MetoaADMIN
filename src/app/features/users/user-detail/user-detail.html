@@ -1,0 +1,680 @@
+<div class="user-detail-page">
+
+  <!-- ========================= -->
+  <!-- HEADER -->
+  <!-- ========================= -->
+
+  <div class="page-header">
+
+    <div>
+
+      <button
+        type="button"
+        class="back-button"
+        (click)="goBack()"
+      >
+        ← Retour aux utilisateurs
+      </button>
+
+      <h1>
+        Détail utilisateur
+      </h1>
+
+      <p>
+        Informations détaillées du compte utilisateur
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- CHARGEMENT -->
+  <!-- ========================= -->
+
+  @if (loading()) {
+
+  <div class="loading-container">
+
+    <div class="spinner"></div>
+
+    <p>
+      Chargement de l'utilisateur...
+    </p>
+
+  </div>
+
+  }
+
+
+  <!-- ========================= -->
+  <!-- ERREUR -->
+  <!-- ========================= -->
+
+  @if (!loading() && errorMessage()) {
+
+  <div class="error-card">
+
+    <div class="error-icon">
+      ⚠
+    </div>
+
+    <h2>
+      Une erreur est survenue
+    </h2>
+
+    <p>
+      {{ errorMessage() }}
+    </p>
+
+    <button
+      type="button"
+      class="back-button primary"
+      (click)="goBack()"
+    >
+      Retour aux utilisateurs
+    </button>
+
+  </div>
+
+  }
+
+
+  <!-- ========================= -->
+  <!-- UTILISATEUR -->
+  <!-- ========================= -->
+
+  @if (!loading() && user()) {
+
+  <div class="detail-content">
+
+    <!-- ===================== -->
+    <!-- CARTE PROFIL -->
+    <!-- ===================== -->
+
+    <section class="profile-card">
+
+      <div class="profile-cover">
+
+        @if (getPhotoUrl(user()!.coverPhotoUrl)) {
+
+        <img
+          [src]="getPhotoUrl(user()!.coverPhotoUrl)!"
+          alt="Photo de couverture"
+        />
+
+        }
+
+      </div>
+
+
+      <div class="profile-main">
+
+        <div class="profile-avatar">
+
+          @if (getPhotoUrl(user()!.photoUrl)) {
+
+          <img
+            [src]="getPhotoUrl(user()!.photoUrl)!"
+            [alt]="
+                  user()!.prenom +
+                  ' ' +
+                  user()!.nom
+                "
+          />
+
+          } @else {
+
+          <span>
+                {{ getInitials(user()!) }}
+              </span>
+
+          }
+
+        </div>
+
+
+        <div class="profile-identity">
+
+          <h2>
+            {{ user()!.prenom }}
+            {{ user()!.nom }}
+          </h2>
+
+          @if (user()!.userName) {
+
+          <p>
+            @{{ user()!.userName }}
+          </p>
+
+          }
+
+          <div class="profile-badges">
+
+              <span
+                class="role-badge"
+              >
+                {{ getRoleLabel(user()!.role) }}
+              </span>
+
+            <span
+              class="status-badge"
+              [class.actif]="
+                  user()!.statusUser === 'ACTIF'
+                "
+              [class.suspendu]="
+                  user()!.statusUser === 'SUSPENDUE'
+                "
+              [class.bloque]="
+                  user()!.statusUser === 'BLOQUER'
+                "
+            >
+                {{ getStatusLabel(user()!.statusUser) }}
+              </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================== -->
+    <!-- INFORMATIONS -->
+    <!-- ===================== -->
+
+    <div class="information-grid">
+
+
+      <!-- =================== -->
+      <!-- INFORMATIONS PERSONNELLES -->
+      <!-- =================== -->
+
+      <section class="info-card">
+
+        <div class="card-header">
+
+          <div class="card-icon">
+            👤
+          </div>
+
+          <div>
+
+            <h2>
+              Informations personnelles
+            </h2>
+
+            <p>
+              Informations générales du compte
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="info-list">
+
+          <div class="info-item">
+
+              <span class="label">
+                Prénom
+              </span>
+
+            <strong>
+              {{ user()!.prenom }}
+            </strong>
+
+          </div>
+
+
+          <div class="info-item">
+
+              <span class="label">
+                Nom
+              </span>
+
+            <strong>
+              {{ user()!.nom }}
+            </strong>
+
+          </div>
+
+
+          <div class="info-item">
+
+              <span class="label">
+                Email
+              </span>
+
+            <strong>
+              {{ user()!.email }}
+            </strong>
+
+          </div>
+
+
+          <div class="info-item">
+
+              <span class="label">
+                Téléphone
+              </span>
+
+            <strong>
+              {{ user()!.telephone || 'Non renseigné' }}
+            </strong>
+
+          </div>
+
+
+          <div class="info-item">
+
+              <span class="label">
+                Nom d'utilisateur
+              </span>
+
+            <strong>
+              {{ user()!.userName || 'Non renseigné' }}
+            </strong>
+
+          </div>
+
+
+          <div class="info-item">
+
+              <span class="label">
+                Sexe
+              </span>
+
+            <strong>
+              {{ user()!.sexe || 'Non renseigné' }}
+            </strong>
+
+          </div>
+
+
+          <div class="info-item">
+
+              <span class="label">
+                Ville
+              </span>
+
+            <strong>
+              {{ user()!.ville || 'Non renseignée' }}
+            </strong>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================== -->
+      <!-- INFORMATIONS COMPTE -->
+      <!-- =================== -->
+
+      <section class="info-card">
+
+        <div class="card-header">
+
+          <div class="card-icon">
+            ⚙
+          </div>
+
+          <div>
+
+            <h2>
+              Informations du compte
+            </h2>
+
+            <p>
+              État et historique du compte
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="info-list">
+
+          <div class="info-item">
+
+              <span class="label">
+                Identifiant
+              </span>
+
+            <strong class="identifier">
+              {{ user()!.idUser }}
+            </strong>
+
+          </div>
+
+
+          <div class="info-item">
+
+              <span class="label">
+                Rôle
+              </span>
+
+            <strong>
+              {{ getRoleLabel(user()!.role) }}
+            </strong>
+
+          </div>
+
+
+          <div class="info-item">
+
+              <span class="label">
+                Statut
+              </span>
+
+            <strong>
+              {{ getStatusLabel(user()!.statusUser) }}
+            </strong>
+
+          </div>
+
+
+          <div class="info-item">
+
+              <span class="label">
+                Date d'inscription
+              </span>
+
+            <strong>
+              {{
+              user()!.dateInscription
+              ? (user()!.dateInscription | date:'dd/MM/yyyy à HH:mm')
+              : 'Non renseignée'
+              }}
+            </strong>
+
+          </div>
+
+
+          <div class="info-item">
+
+              <span class="label">
+                Dernière modification
+              </span>
+
+            <strong>
+              {{
+              user()!.dateModification
+              ? (user()!.dateModification | date:'dd/MM/yyyy à HH:mm')
+              : 'Aucune'
+              }}
+            </strong>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================== -->
+      <!-- PROFILS -->
+      <!-- =================== -->
+
+      <section class="info-card profiles-card">
+
+        <div class="card-header">
+
+          <div class="card-icon">
+            🚗
+          </div>
+
+          <div>
+
+            <h2>
+              Profils METOA
+            </h2>
+
+            <p>
+              Profils associés à cet utilisateur
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="profiles-list">
+
+          <div
+            class="profile-status"
+            [class.available]="
+                user()!.hasProfilePassager
+              "
+          >
+
+            <div class="profile-status-icon">
+              👤
+            </div>
+
+            <div>
+
+              <strong>
+                Profil passager
+              </strong>
+
+              <span>
+                  {{
+                    user()!.hasProfilePassager
+                      ? 'Profil configuré'
+                      : 'Aucun profil'
+                  }}
+                </span>
+
+            </div>
+
+            <span class="profile-check">
+                {{
+                  user()!.hasProfilePassager
+                    ? '✓'
+                    : '—'
+                }}
+              </span>
+
+          </div>
+
+
+          <div
+            class="profile-status"
+            [class.available]="
+                user()!.hasProfileConducteur
+              "
+          >
+
+            <div class="profile-status-icon">
+              🚗
+            </div>
+
+            <div>
+
+              <strong>
+                Profil conducteur
+              </strong>
+
+              <span>
+                  {{
+                    user()!.hasProfileConducteur
+                      ? 'Profil configuré'
+                      : 'Aucun profil'
+                  }}
+                </span>
+
+            </div>
+
+            <span class="profile-check">
+                {{
+                  user()!.hasProfileConducteur
+                    ? '✓'
+                    : '—'
+                }}
+              </span>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- ===================== -->
+      <!-- ACTIONS ADMINISTRATEUR -->
+      <!-- ===================== -->
+
+      <section class="info-card admin-actions-card">
+
+        <div class="card-header">
+
+          <div class="card-icon">
+            ⚙
+          </div>
+
+          <div>
+
+            <h2>
+              Actions administrateur
+            </h2>
+
+            <p>
+              Modifier le statut de ce compte
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- MESSAGE SUCCÈS -->
+
+        @if (successMessage()) {
+
+        <div class="success-message">
+          ✓ {{ successMessage() }}
+        </div>
+
+        }
+
+
+        <!-- MESSAGE ERREUR -->
+
+        @if (errorMessage()) {
+
+        <div class="action-error-message">
+          {{ errorMessage() }}
+        </div>
+
+        }
+
+
+        <div class="current-status">
+
+    <span>
+      Statut actuel
+    </span>
+
+          <strong
+            class="status-badge"
+            [class.actif]="
+        user()!.statusUser === 'ACTIF'
+      "
+            [class.suspendu]="
+        user()!.statusUser === 'SUSPENDUE'
+      "
+            [class.bloque]="
+        user()!.statusUser === 'BLOQUER'
+      "
+          >
+            {{ getStatusLabel(user()!.statusUser) }}
+          </strong>
+
+        </div>
+
+
+        <div class="admin-action-buttons">
+
+          <!-- ACTIVER -->
+
+          @if (user()!.statusUser !== 'ACTIF') {
+
+          <button
+            type="button"
+            class="action-button activate"
+            [disabled]="changingStatus()"
+            (click)="changeStatus('ACTIF')"
+          >
+
+            @if (changingStatus()) {
+            Modification...
+            } @else {
+            ✓ Activer
+            }
+
+          </button>
+
+          }
+
+
+          <!-- SUSPENDRE -->
+
+          @if (user()!.statusUser !== 'SUSPENDUE') {
+
+          <button
+            type="button"
+            class="action-button suspend"
+            [disabled]="changingStatus()"
+            (click)="changeStatus('SUSPENDUE')"
+          >
+
+            @if (changingStatus()) {
+            Modification...
+            } @else {
+            ⏸ Suspendre
+            }
+
+          </button>
+
+          }
+
+
+          <!-- BLOQUER -->
+
+          @if (user()!.statusUser !== 'BLOQUER') {
+
+          <button
+            type="button"
+            class="action-button block"
+            [disabled]="changingStatus()"
+            (click)="changeStatus('BLOQUER')"
+          >
+
+            @if (changingStatus()) {
+            Modification...
+            } @else {
+            🔒 Bloquer
+            }
+
+          </button>
+
+          }
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </div>
+
+  }
+
+</div>

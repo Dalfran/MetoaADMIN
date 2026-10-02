@@ -320,6 +320,10 @@
             Inscription
           </th>
 
+          <th>
+            Actions
+          </th>
+
         </tr>
 
         </thead>
@@ -463,6 +467,15 @@
 
             }
 
+          </td>
+
+          <td class="actions-cell">
+            <a
+              class="view-button"
+              [routerLink]="['/admin/users', user.idUser]"
+            >
+              👁 Voir
+            </a>
           </td>
 
         </tr>

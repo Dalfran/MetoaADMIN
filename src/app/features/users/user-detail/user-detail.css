@@ -1,0 +1,562 @@
+:host {
+  display: block;
+}
+
+.user-detail-page {
+  padding: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+
+/* ========================================
+   HEADER
+======================================== */
+
+.page-header {
+  margin-bottom: 24px;
+}
+
+.page-header h1 {
+  margin: 14px 0 6px;
+  color: #0c1230;
+  font-size: 28px;
+}
+
+.page-header p {
+  margin: 0;
+  color: #777;
+  font-size: 14px;
+}
+
+.back-button {
+  border: none;
+  background: transparent;
+  color: #0c1230;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+}
+
+.back-button:hover {
+  color: #ec1d83;
+}
+
+.back-button.primary {
+  background: #0c1230;
+  color: #ffffff;
+  padding: 11px 18px;
+  border-radius: 8px;
+}
+
+
+/* ========================================
+   PROFIL
+======================================== */
+
+.profile-card {
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(12, 18, 48, 0.07);
+  margin-bottom: 24px;
+}
+
+.profile-cover {
+  height: 180px;
+  background:
+    linear-gradient(
+      135deg,
+      #0c1230,
+      #262d59
+    );
+  overflow: hidden;
+}
+
+.profile-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.profile-main {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 0 28px 28px;
+}
+
+.profile-avatar {
+  width: 112px;
+  height: 112px;
+  min-width: 112px;
+  margin-top: -55px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #ec1d83;
+  border: 5px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 800;
+  position: relative;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.profile-identity {
+  padding-top: 20px;
+}
+
+.profile-identity h2 {
+  margin: 0 0 4px;
+  color: #0c1230;
+  font-size: 24px;
+}
+
+.profile-identity p {
+  margin: 0 0 12px;
+  color: #777;
+  font-size: 14px;
+}
+
+.profile-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+
+/* ========================================
+   BADGES
+======================================== */
+
+.role-badge,
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 11px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.role-badge {
+  background: #eef0f8;
+  color: #0c1230;
+}
+
+.status-badge.actif {
+  background: #e7f8ef;
+  color: #16834d;
+}
+
+.status-badge.suspendu {
+  background: #fff4df;
+  color: #b87500;
+}
+
+.status-badge.bloque {
+  background: #fde8eb;
+  color: #c5223c;
+}
+
+
+/* ========================================
+   INFORMATIONS
+======================================== */
+
+.information-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.info-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow:
+    0 4px 18px rgba(12, 18, 48, 0.06);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.card-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: #fce7f3;
+  color: #ec1d83;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+}
+
+.card-header h2 {
+  margin: 0 0 4px;
+  color: #0c1230;
+  font-size: 17px;
+}
+
+.card-header p {
+  margin: 0;
+  color: #888;
+  font-size: 12px;
+}
+
+.info-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 13px 0;
+  border-bottom: 1px solid #eef0f4;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.info-item .label {
+  color: #858894;
+  font-size: 13px;
+}
+
+.info-item strong {
+  color: #0c1230;
+  font-size: 13px;
+  text-align: right;
+}
+
+.identifier {
+  max-width: 230px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* ========================================
+   PROFILS
+======================================== */
+
+.profiles-card {
+  grid-column: 1 / -1;
+}
+
+.profiles-list {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.profile-status {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 17px;
+  border: 1px solid #e9ebf0;
+  border-radius: 12px;
+}
+
+.profile-status-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #f2f3f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-status > div:nth-child(2) {
+  flex: 1;
+}
+
+.profile-status strong {
+  display: block;
+  color: #0c1230;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.profile-status span {
+  color: #888;
+  font-size: 12px;
+}
+
+.profile-status.available {
+  border-color: #d5eee1;
+  background: #fbfffc;
+}
+
+.profile-status.available
+.profile-status-icon {
+  background: #e7f8ef;
+}
+
+.profile-check {
+  font-size: 18px !important;
+  font-weight: 800;
+  color: #b0b3bb !important;
+}
+
+.profile-status.available
+.profile-check {
+  color: #16834d !important;
+}
+
+
+/* ========================================
+   LOADING
+======================================== */
+
+.loading-container {
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #777;
+}
+
+.spinner {
+  width: 38px;
+  height: 38px;
+  border: 4px solid #e8e9ee;
+  border-top-color: #ec1d83;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 14px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* ========================================
+   ERREUR
+======================================== */
+
+.error-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 50px 30px;
+  text-align: center;
+  box-shadow:
+    0 4px 18px rgba(12, 18, 48, 0.06);
+}
+
+.error-icon {
+  font-size: 40px;
+  margin-bottom: 15px;
+}
+
+.error-card h2 {
+  color: #0c1230;
+  margin: 0 0 8px;
+}
+
+.error-card p {
+  color: #777;
+  margin: 0 0 22px;
+}
+
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 900px) {
+
+  .information-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profiles-card {
+    grid-column: auto;
+  }
+
+  .profiles-list {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .user-detail-page {
+    padding: 18px;
+  }
+
+  .profile-cover {
+    height: 140px;
+  }
+
+  .profile-main {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 0 18px 22px;
+  }
+
+  .profile-avatar {
+    margin-top: -50px;
+  }
+
+  .profile-identity {
+    padding-top: 0;
+  }
+
+  .info-card {
+    padding: 18px;
+  }
+
+  .info-item {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .info-item strong {
+    text-align: left;
+  }
+
+  .admin-action-buttons {
+    flex-direction: column;
+  }
+
+  .action-button {
+    width: 100%;
+  }
+
+  .current-status {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+}
+
+/* ========================================
+   ACTIONS ADMINISTRATEUR
+======================================== */
+
+.admin-actions-card {
+  grid-column: 1 / -1;
+}
+
+.current-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 15px 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eef0f4;
+}
+
+.current-status > span {
+  color: #858894;
+  font-size: 13px;
+}
+
+.admin-action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.action-button {
+  min-height: 42px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.action-button.activate {
+  background: #e7f8ef;
+  color: #16834d;
+}
+
+.action-button.activate:hover:not(:disabled) {
+  background: #d2f1df;
+}
+
+.action-button.suspend {
+  background: #fff4df;
+  color: #b87500;
+}
+
+.action-button.suspend:hover:not(:disabled) {
+  background: #ffebc5;
+}
+
+.action-button.block {
+  background: #fde8eb;
+  color: #c5223c;
+}
+
+.action-button.block:hover:not(:disabled) {
+  background: #f9d6db;
+}
+
+
+/* ========================================
+   MESSAGES
+======================================== */
+
+.success-message {
+  padding: 12px 14px;
+  margin-bottom: 18px;
+  border-radius: 9px;
+  background: #e7f8ef;
+  color: #16834d;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.action-error-message {
+  padding: 12px 14px;
+  margin-bottom: 18px;
+  border-radius: 9px;
+  background: #fde8eb;
+  color: #c5223c;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+

@@ -14,6 +14,10 @@ import {
 } from '@angular/forms';
 
 import {
+  RouterLink
+} from '@angular/router';
+
+import {
   AdminUserService
 } from '../../core/services/admin-user.service';
 
@@ -29,7 +33,8 @@ import {
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterLink
   ],
   templateUrl: './users.html',
   styleUrl: './users.css'

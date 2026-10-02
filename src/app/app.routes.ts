@@ -18,6 +18,8 @@ import {
   Users
 } from './features/users/users';
 
+import { UserDetail } from './features/users/user-detail/user-detail';
+
 import {
   adminGuard
 } from './core/guards/admin.guard';
@@ -57,6 +59,11 @@ export const routes: Routes = [
         path: 'users',
         component: Users
       },
+
+      {
+        path: 'users/:id',
+        component: UserDetail
+      }
 
     ]
   },
