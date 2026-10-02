@@ -1,0 +1,102 @@
+<aside class="sidebar">
+
+  <div class="sidebar-logo">
+
+    <div class="logo-mark">
+      M
+    </div>
+
+    <div class="logo-text">
+      <strong>METOA</strong>
+      <span>ADMIN</span>
+    </div>
+
+  </div>
+
+  <nav class="navigation">
+
+    <div class="nav-section">
+      <span class="section-label">
+        PRINCIPAL
+      </span>
+
+      <a
+        routerLink="/admin/dashboard"
+        routerLinkActive="active"
+        class="nav-item"
+      >
+        <span class="nav-icon">📊</span>
+        <span>Dashboard</span>
+      </a>
+
+    </div>
+
+    <div class="nav-section">
+
+      <span class="section-label">
+        GESTION
+      </span>
+
+      <a
+        routerLink="/admin/users"
+        routerLinkActive="active"
+        class="nav-item"
+      >
+        <span class="nav-icon">👥</span>
+        <span>Utilisateurs</span>
+      </a>
+
+      <a
+        routerLink="/admin/drivers"
+        routerLinkActive="active"
+        class="nav-item"
+      >
+        <span class="nav-icon">🚗</span>
+        <span>Chauffeurs</span>
+      </a>
+
+      <a
+        routerLink="/admin/documents"
+        routerLinkActive="active"
+        class="nav-item"
+      >
+        <span class="nav-icon">📄</span>
+        <span>Documents</span>
+      </a>
+
+      <a
+        routerLink="/admin/trajets"
+        routerLinkActive="active"
+        class="nav-item"
+      >
+        <span class="nav-icon">🛣️</span>
+        <span>Trajets</span>
+      </a>
+
+      <a
+        routerLink="/admin/reservations"
+        routerLinkActive="active"
+        class="nav-item"
+      >
+        <span class="nav-icon">📋</span>
+        <span>Réservations</span>
+      </a>
+
+    </div>
+
+  </nav>
+
+  <div class="sidebar-footer">
+
+    <button
+      type="button"
+      class="logout-button"
+      (click)="logout()"
+    >
+      <span class="nav-icon">🚪</span>
+      <span>Déconnexion</span>
+    </button>
+
+  </div>
+
+</aside>

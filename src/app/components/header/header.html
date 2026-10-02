@@ -1,0 +1,58 @@
+<header class="header">
+
+  <div class="header-title">
+    <span class="title-main">
+      Administration
+    </span>
+
+    <span class="title-sub">
+      Gestion de la plateforme METOA
+    </span>
+  </div>
+
+  <div class="header-actions">
+
+    <button
+      type="button"
+      class="notification-button"
+      title="Notifications"
+    >
+      🔔
+      <span class="notification-dot"></span>
+    </button>
+
+    <div class="admin-profile">
+
+      <div class="admin-avatar">
+
+        @if (user?.photoUrl) {
+          <img
+            [src]="user?.photoUrl"
+            alt="Photo administrateur"
+          />
+        } @else {
+          <span>
+            {{ user?.prenom?.charAt(0) || 'A' }}
+          </span>
+        }
+
+      </div>
+
+      <div class="admin-info">
+
+        <strong>
+          {{ user?.prenom || 'Administrateur' }}
+          {{ user?.nom || '' }}
+        </strong>
+
+        <span>
+          Administrateur
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</header>

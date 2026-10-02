@@ -1,0 +1,569 @@
+<div class="users-page">
+
+  <!-- ========================= -->
+  <!-- EN-TÊTE -->
+  <!-- ========================= -->
+
+  <div class="page-header">
+
+    <div>
+      <h1>Utilisateurs</h1>
+
+      <p>
+        Gestion des utilisateurs de la plateforme METOA
+      </p>
+    </div>
+
+    <button
+      type="button"
+      class="refresh-button"
+      (click)="searchActive() ? searchUsers() : loadUsers()"
+      [disabled]="loading()"
+    >
+      ↻ Actualiser
+    </button>
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- RECHERCHE -->
+  <!-- ========================= -->
+
+  <section class="search-card">
+
+    <div class="search-header">
+
+      <div>
+        <h2>Rechercher un utilisateur</h2>
+
+        <p>
+          Filtrez les utilisateurs selon vos critères.
+        </p>
+      </div>
+
+      @if (searchActive()) {
+      <span class="search-active">
+          Recherche active
+        </span>
+      }
+
+    </div>
+
+
+    <form
+      [formGroup]="searchForm"
+      (ngSubmit)="searchUsers()"
+      class="search-form"
+    >
+
+      <!-- NOM -->
+
+      <div class="form-group">
+
+        <label for="nom">
+          Nom
+        </label>
+
+        <input
+          id="nom"
+          type="text"
+          formControlName="nom"
+          placeholder="Ex. Dupont"
+        />
+
+      </div>
+
+
+      <!-- PRÉNOM -->
+
+      <div class="form-group">
+
+        <label for="prenom">
+          Prénom
+        </label>
+
+        <input
+          id="prenom"
+          type="text"
+          formControlName="prenom"
+          placeholder="Ex. Jean"
+        />
+
+      </div>
+
+
+      <!-- EMAIL -->
+
+      <div class="form-group">
+
+        <label for="email">
+          Email
+        </label>
+
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="Ex. jean@email.com"
+        />
+
+      </div>
+
+
+      <!-- VILLE -->
+
+      <div class="form-group">
+
+        <label for="ville">
+          Ville
+        </label>
+
+        <input
+          id="ville"
+          type="text"
+          formControlName="ville"
+          placeholder="Ex. Yaoundé"
+        />
+
+      </div>
+
+
+      <!-- RÔLE -->
+
+      <div class="form-group">
+
+        <label for="role">
+          Rôle
+        </label>
+
+        <select
+          id="role"
+          formControlName="role"
+        >
+
+          <option value="">
+            Tous les rôles
+          </option>
+
+          <option value="PASSAGER">
+            Passager
+          </option>
+
+          <option value="CHAUFFEUR">
+            Chauffeur
+          </option>
+
+          <option value="ADMIN">
+            Administrateur
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- STATUT -->
+
+      <div class="form-group">
+
+        <label for="statusUser">
+          Statut
+        </label>
+
+        <select
+          id="statusUser"
+          formControlName="statusUser"
+        >
+
+          <option value="">
+            Tous les statuts
+          </option>
+
+          <option value="ACTIF">
+            Actif
+          </option>
+
+          <option value="SUSPENDUE">
+            Suspendu
+          </option>
+
+          <option value="BLOQUER">
+            Bloqué
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- BOUTONS -->
+
+      <div class="search-actions">
+
+        <button
+          type="submit"
+          class="search-button"
+          [disabled]="loading()"
+        >
+          🔎 Rechercher
+        </button>
+
+        <button
+          type="button"
+          class="reset-button"
+          (click)="resetSearch()"
+        >
+          Réinitialiser
+        </button>
+
+      </div>
+
+    </form>
+
+  </section>
+
+
+  <!-- ========================= -->
+  <!-- ERREUR -->
+  <!-- ========================= -->
+
+  @if (errorMessage()) {
+
+  <div class="error-message">
+    {{ errorMessage() }}
+  </div>
+
+  }
+
+
+  <!-- ========================= -->
+  <!-- CHARGEMENT -->
+  <!-- ========================= -->
+
+  @if (loading()) {
+
+  <div class="loading-container">
+
+    <div class="spinner"></div>
+
+    <p>
+      Chargement des utilisateurs...
+    </p>
+
+  </div>
+
+  }
+
+
+  <!-- ========================= -->
+  <!-- TABLEAU -->
+  <!-- ========================= -->
+
+  @if (!loading()) {
+
+  <section class="users-card">
+
+    <div class="table-header">
+
+      <div>
+
+        <h2>
+          Liste des utilisateurs
+        </h2>
+
+        <span>
+            {{ totalElements() }}
+            utilisateur(s)
+          </span>
+
+      </div>
+
+    </div>
+
+
+    @if (users().length > 0) {
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+        <tr>
+
+          <th>
+            Utilisateur
+          </th>
+
+          <th>
+            Email
+          </th>
+
+          <th>
+            Téléphone
+          </th>
+
+          <th>
+            Ville
+          </th>
+
+          <th>
+            Rôle
+          </th>
+
+          <th>
+            Statut
+          </th>
+
+          <th>
+            Inscription
+          </th>
+
+        </tr>
+
+        </thead>
+
+
+        <tbody>
+
+        @for (
+        user of users();
+        track user.idUser
+        ) {
+
+        <tr>
+
+          <!-- UTILISATEUR -->
+
+          <td>
+
+            <div class="user-cell">
+
+              <div class="user-avatar">
+
+                @if (getPhotoUrl(user.photoUrl)) {
+
+                <img
+                  [src]="getPhotoUrl(user.photoUrl)!"
+                  [alt]="user.prenom + ' ' + user.nom"
+                  loading="lazy"
+                  (error)="user.photoUrl = null"
+                />
+
+                } @else {
+
+                <span>
+                  {{ getInitials(user) }}
+                </span>
+
+                }
+
+              </div>
+
+
+              <div class="user-info">
+
+                <strong>
+                  {{ user.prenom }}
+                  {{ user.nom }}
+                </strong>
+
+                @if (user.userName) {
+
+                <span>
+                            @{{ user.userName }}
+                          </span>
+
+                }
+
+              </div>
+
+            </div>
+
+          </td>
+
+
+          <!-- EMAIL -->
+
+          <td>
+            {{ user.email }}
+          </td>
+
+
+          <!-- TÉLÉPHONE -->
+
+          <td>
+            {{ user.telephone || '—' }}
+          </td>
+
+
+          <!-- VILLE -->
+
+          <td>
+            {{ user.ville || '—' }}
+          </td>
+
+
+          <!-- RÔLE -->
+
+          <td>
+
+                    <span
+                      class="role-badge"
+                      [class.passager]="
+                        user.role === 'PASSAGER'
+                      "
+                      [class.chauffeur]="
+                        user.role === 'CHAUFFEUR'
+                      "
+                      [class.admin]="
+                        user.role === 'ADMIN'
+                      "
+                    >
+                      {{ getRoleLabel(user.role) }}
+                    </span>
+
+          </td>
+
+
+          <!-- STATUT -->
+
+          <td>
+
+                    <span
+                      class="status-badge"
+                      [class.actif]="
+                        user.statusUser === 'ACTIF'
+                      "
+                      [class.suspendu]="
+                        user.statusUser === 'SUSPENDUE'
+                      "
+                      [class.bloque]="
+                        user.statusUser === 'BLOQUER'
+                      "
+                    >
+                      {{ getStatusLabel(user.statusUser) }}
+                    </span>
+
+          </td>
+
+
+          <!-- DATE -->
+
+          <td>
+
+            @if (user.dateInscription) {
+
+            {{ user.dateInscription | date:'dd/MM/yyyy' }}
+
+            } @else {
+
+            —
+
+            }
+
+          </td>
+
+        </tr>
+
+        }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- PAGINATION -->
+    <!-- ========================= -->
+
+    @if (totalPages() > 0) {
+
+    <div class="pagination">
+
+            <span class="pagination-info">
+
+              Page
+              {{ currentPage() + 1 }}
+              sur
+              {{ totalPages() }}
+
+            </span>
+
+
+      <div class="pagination-buttons">
+
+        <button
+          type="button"
+          [disabled]="currentPage() === 0"
+          (click)="previousPage()"
+        >
+          ←
+        </button>
+
+
+        @for (
+        page of [].constructor(totalPages());
+        let i = $index;
+        track i
+        ) {
+
+        <button
+          type="button"
+          [class.current]="
+                    currentPage() === i
+                  "
+          (click)="goToPage(i)"
+        >
+          {{ i + 1 }}
+        </button>
+
+        }
+
+
+        <button
+          type="button"
+          [disabled]="
+                  currentPage() >=
+                  totalPages() - 1
+                "
+          (click)="nextPage()"
+        >
+          →
+        </button>
+
+      </div>
+
+    </div>
+
+    }
+
+    } @else {
+
+    <div class="empty-state">
+
+      <div class="empty-icon">
+        👥
+      </div>
+
+      <h3>
+        Aucun utilisateur trouvé
+      </h3>
+
+      <p>
+        Aucun utilisateur ne correspond
+        aux critères de recherche.
+      </p>
+
+    </div>
+
+    }
+
+  </section>
+
+  }
+
+</div>

@@ -1,0 +1,21 @@
+:host {
+  display: block;
+}
+
+.admin-layout {
+  min-height: 100vh;
+  display: flex;
+  background: #f5f6fa;
+}
+
+.main-area {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-content {
+  flex: 1;
+  min-width: 0;
+}

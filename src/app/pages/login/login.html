@@ -1,0 +1,129 @@
+<div class="login-page">
+
+  <div class="login-card">
+
+    <div class="login-header">
+
+      <div class="logo">
+        M
+      </div>
+
+      <h1>METOA</h1>
+
+      <p>
+        Administration
+      </p>
+
+    </div>
+
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="submit()"
+      novalidate
+    >
+
+      <div class="form-group">
+
+        <label for="email">
+          Adresse email
+        </label>
+
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="admin@metoa.com"
+          autocomplete="email"
+        >
+
+        @if (
+          loginForm.controls.email.touched &&
+          loginForm.controls.email.invalid
+          ) {
+
+          <small class="error">
+
+            @if (
+              loginForm.controls.email.errors?.['required']
+              ) {
+              L'email est obligatoire.
+            }
+
+            @if (
+              loginForm.controls.email.errors?.['email']
+              ) {
+              L'email n'est pas valide.
+            }
+
+          </small>
+        }
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="passe">
+          Mot de passe
+        </label>
+
+        <input
+          id="passe"
+          type="password"
+          formControlName="passe"
+          placeholder="Votre mot de passe"
+          autocomplete="current-password"
+        >
+
+        @if (
+          loginForm.controls.passe.touched &&
+          loginForm.controls.passe.invalid
+          ) {
+
+          <small class="error">
+
+            @if (
+              loginForm.controls.passe.errors?.['required']
+              ) {
+              Le mot de passe est obligatoire.
+            }
+
+            @if (
+              loginForm.controls.passe.errors?.['minlength']
+              ) {
+              Le mot de passe doit contenir au moins 6 caractères.
+            }
+
+          </small>
+        }
+
+      </div>
+
+
+      @if (errorMessage) {
+
+        <div class="error-message">
+          {{ errorMessage }}
+        </div>
+
+      }
+
+
+      <button
+        type="submit"
+        [disabled]="loading"
+      >
+
+        @if (loading) {
+          Connexion...
+        } @else {
+          Se connecter
+        }
+
+      </button>
+
+    </form>
+
+  </div>
+
+</div>

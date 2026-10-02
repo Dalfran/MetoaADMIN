@@ -1,0 +1,497 @@
+<div class="dashboard">
+
+  <!-- ============================== -->
+  <!-- HEADER -->
+  <!-- ============================== -->
+
+  <div class="dashboard-header">
+
+    <div>
+
+      <h1>
+        Tableau de bord
+      </h1>
+
+      <p>
+        Vue générale de l'activité de METOA
+      </p>
+
+    </div>
+
+    <button
+      class="refresh-button"
+      type="button"
+      (click)="loadDashboard()"
+      [disabled]="loading()"
+    >
+      ↻ Actualiser
+    </button>
+
+  </div>
+
+
+  <!-- ============================== -->
+  <!-- LOADING -->
+  <!-- ============================== -->
+
+  @if (loading()) {
+
+    <div class="loading-container">
+
+      <div class="spinner"></div>
+
+      <p>
+        Chargement des statistiques...
+      </p>
+
+    </div>
+
+  }
+
+
+  <!-- ============================== -->
+  <!-- ERROR -->
+  <!-- ============================== -->
+
+  @if (!loading() && errorMessage()) {
+
+    <div class="error-container">
+
+      <strong>
+        Erreur
+      </strong>
+
+      <p>
+        {{ errorMessage() }}
+      </p>
+
+      <button
+        type="button"
+        (click)="loadDashboard()"
+      >
+        Réessayer
+      </button>
+
+    </div>
+
+  }
+
+
+  <!-- ============================== -->
+  <!-- DASHBOARD -->
+  <!-- ============================== -->
+
+  @if (!loading() && !errorMessage() && dashboard()) {
+
+    <section class="dashboard-section">
+
+      <div class="section-title">
+
+        <h2>
+          Utilisateurs
+        </h2>
+
+        <span>
+          {{ dashboard()!.totalUsers }}
+          utilisateurs
+        </span>
+
+      </div>
+
+
+      <div class="stats-grid">
+
+        <!-- TOTAL -->
+
+        <div class="stat-card">
+
+          <div class="stat-icon">
+            👥
+          </div>
+
+          <div>
+
+            <span class="stat-label">
+              Total utilisateurs
+            </span>
+
+            <strong>
+              {{ dashboard()!.totalUsers }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <!-- PASSAGERS -->
+
+        <div class="stat-card">
+
+          <div class="stat-icon">
+            🧳
+          </div>
+
+          <div>
+
+            <span class="stat-label">
+              Passagers
+            </span>
+
+            <strong>
+              {{ dashboard()!.totalPassagers }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <!-- CHAUFFEURS -->
+
+        <div class="stat-card">
+
+          <div class="stat-icon">
+            🚗
+          </div>
+
+          <div>
+
+            <span class="stat-label">
+              Chauffeurs
+            </span>
+
+            <strong>
+              {{ dashboard()!.totalChauffeurs }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <!-- ADMIN -->
+
+        <div class="stat-card">
+
+          <div class="stat-icon">
+            🛡️
+          </div>
+
+          <div>
+
+            <span class="stat-label">
+              Administrateurs
+            </span>
+
+            <strong>
+              {{ dashboard()!.totalAdmins }}
+            </strong>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ============================== -->
+      <!-- STATUT UTILISATEURS -->
+      <!-- ============================== -->
+
+      <div class="stats-grid small-grid">
+
+        <div class="mini-card active">
+
+          <span>
+            Actifs
+          </span>
+
+          <strong>
+            {{ dashboard()!.usersActifs }}
+          </strong>
+
+        </div>
+
+
+        <div class="mini-card suspended">
+
+          <span>
+            Suspendus
+          </span>
+
+          <strong>
+            {{ dashboard()!.usersSuspendus }}
+          </strong>
+
+        </div>
+
+
+        <div class="mini-card blocked">
+
+          <span>
+            Bloqués
+          </span>
+
+          <strong>
+            {{ dashboard()!.usersBloques }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ============================== -->
+      <!-- TRAJETS -->
+      <!-- ============================== -->
+
+    <section class="dashboard-section">
+
+      <div class="section-title">
+
+        <h2>
+          Trajets
+        </h2>
+
+        <span>
+          {{ dashboard()!.totalTrajets }}
+          trajets
+        </span>
+
+      </div>
+
+
+      <div class="stats-grid">
+
+        <div class="stat-card">
+
+          <div class="stat-icon">
+            🛣️
+          </div>
+
+          <div>
+
+            <span class="stat-label">
+              Total trajets
+            </span>
+
+            <strong>
+              {{ dashboard()!.totalTrajets }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <div class="mini-card">
+
+          <span>
+            Planifiés
+          </span>
+
+          <strong>
+            {{ dashboard()!.trajetsPlanifies }}
+          </strong>
+
+        </div>
+
+
+        <div class="mini-card">
+
+          <span>
+            En cours
+          </span>
+
+          <strong>
+            {{ dashboard()!.trajetsEnCours }}
+          </strong>
+
+        </div>
+
+
+        <div class="mini-card">
+
+          <span>
+            Terminés
+          </span>
+
+          <strong>
+            {{ dashboard()!.trajetsTermines }}
+          </strong>
+
+        </div>
+
+
+        <div class="mini-card blocked">
+
+          <span>
+            Annulés
+          </span>
+
+          <strong>
+            {{ dashboard()!.trajetsAnnules }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ============================== -->
+      <!-- RESERVATIONS -->
+      <!-- ============================== -->
+
+    <section class="dashboard-section">
+
+      <div class="section-title">
+
+        <h2>
+          Réservations
+        </h2>
+
+        <span>
+          {{ dashboard()!.totalReservations }}
+          réservations
+        </span>
+
+      </div>
+
+
+      <div class="stats-grid">
+
+        <div class="stat-card">
+
+          <div class="stat-icon">
+            📅
+          </div>
+
+          <div>
+
+            <span class="stat-label">
+              Total réservations
+            </span>
+
+            <strong>
+              {{ dashboard()!.totalReservations }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <div class="mini-card">
+
+          <span>
+            En attente
+          </span>
+
+          <strong>
+            {{ dashboard()!.reservationsEnAttente }}
+          </strong>
+
+        </div>
+
+
+        <div class="mini-card active">
+
+          <span>
+            Confirmées
+          </span>
+
+          <strong>
+            {{ dashboard()!.reservationsConfirmees }}
+          </strong>
+
+        </div>
+
+
+        <div class="mini-card">
+
+          <span>
+            Terminées
+          </span>
+
+          <strong>
+            {{ dashboard()!.reservationsTerminees }}
+          </strong>
+
+        </div>
+
+
+        <div class="mini-card blocked">
+
+          <span>
+            Annulées
+          </span>
+
+          <strong>
+            {{ dashboard()!.reservationsAnnulees }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ============================== -->
+      <!-- CHAUFFEURS -->
+      <!-- ============================== -->
+
+    <section class="dashboard-section">
+
+      <div class="section-title">
+
+        <h2>
+          Chauffeurs
+        </h2>
+
+        <span>
+          Activité des profils conducteurs
+        </span>
+
+      </div>
+
+
+      <div class="driver-summary">
+
+        <div class="driver-card">
+
+          <span>
+            Chauffeurs actifs
+          </span>
+
+          <strong>
+            {{ dashboard()!.chauffeursActifs }}
+          </strong>
+
+        </div>
+
+
+        <div class="driver-card inactive">
+
+          <span>
+            Chauffeurs inactifs
+          </span>
+
+          <strong>
+            {{ dashboard()!.chauffeursInactifs }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  }
+
+</div>

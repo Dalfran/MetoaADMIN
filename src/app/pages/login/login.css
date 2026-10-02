@@ -1,0 +1,177 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.login-page {
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0c1230 0%,
+      #171d4d 50%,
+      #0c1230 100%
+    );
+}
+
+.login-card {
+  width: 100%;
+  max-width: 430px;
+
+  padding: 40px;
+
+  border-radius: 20px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+.login-header {
+  text-align: center;
+
+  margin-bottom: 32px;
+}
+
+.logo {
+  width: 64px;
+  height: 64px;
+
+  margin: 0 auto 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 16px;
+
+  background: #ec1d83;
+
+  color: white;
+
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.login-header h1 {
+  margin: 0;
+
+  color: #0c1230;
+
+  font-size: 30px;
+}
+
+.login-header p {
+  margin-top: 6px;
+
+  color: #666;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #0c1230;
+
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 13px 14px;
+
+  border: 1px solid #d8dbe7;
+
+  border-radius: 10px;
+
+  outline: none;
+
+  font-size: 15px;
+
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+input:focus {
+  border-color: #7b2cff;
+
+  box-shadow:
+    0 0 0 3px rgba(123, 44, 255, 0.1);
+}
+
+button {
+  width: 100%;
+
+  margin-top: 10px;
+
+  padding: 14px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: #ec1d83;
+
+  color: white;
+
+  font-size: 16px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s,
+    opacity 0.2s;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+
+.error {
+  display: block;
+
+  margin-top: 6px;
+
+  color: #d93025;
+
+  font-size: 13px;
+}
+
+.error-message {
+  margin-bottom: 15px;
+
+  padding: 12px;
+
+  border-radius: 8px;
+
+  background: #fff0f0;
+
+  color: #c62828;
+
+  font-size: 14px;
+}
