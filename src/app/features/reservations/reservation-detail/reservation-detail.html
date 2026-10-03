@@ -1,0 +1,612 @@
+
+<div class="reservation-detail-page">
+
+  <!-- ======================================================
+       HEADER
+  ======================================================= -->
+
+  <div class="page-header">
+
+    <button
+      type="button"
+      class="back-button"
+      (click)="goBack()"
+    >
+      ← Retour aux réservations
+    </button>
+
+    @if (reservation()) {
+
+    <div class="header-content">
+
+      <div>
+
+          <span class="eyebrow">
+            RÉSERVATION
+          </span>
+
+        <h1>
+          #{{ reservation()?.idReservation }}
+        </h1>
+
+        <p>
+          Détails de la réservation
+        </p>
+
+      </div>
+
+      <span
+        class="status-badge"
+        [class]="
+            getStatusClass(
+              reservation()!.statut
+            )
+          "
+      >
+          {{
+            getStatusLabel(
+              reservation()!.statut
+            )
+          }}
+        </span>
+
+    </div>
+
+    }
+
+  </div>
+
+
+  <!-- ======================================================
+       CHARGEMENT
+  ======================================================= -->
+
+  @if (loading()) {
+
+  <div class="loading-state">
+
+    <div class="spinner"></div>
+
+    <p>
+      Chargement de la réservation...
+    </p>
+
+  </div>
+
+  }
+
+
+  <!-- ======================================================
+       ERREUR
+  ======================================================= -->
+
+  @if (!loading() && errorMessage()) {
+
+  <div class="error-state">
+
+    <div class="error-icon">
+      ⚠️
+    </div>
+
+    <strong>
+      Une erreur est survenue
+    </strong>
+
+    <p>
+      {{ errorMessage() }}
+    </p>
+
+    <button
+      type="button"
+      class="btn-primary"
+      (click)="goBack()"
+    >
+      Retour
+    </button>
+
+  </div>
+
+  }
+
+
+  <!-- ======================================================
+       CONTENU
+  ======================================================= -->
+
+  @if (!loading() && reservation()) {
+
+  <div class="content-grid">
+
+    <!-- ==================================================
+         PASSAGER
+    =================================================== -->
+
+    <section class="detail-card">
+
+      <div class="card-header">
+
+        <div>
+
+            <span class="card-eyebrow">
+              PASSAGER
+            </span>
+
+          <h2>
+            Informations du passager
+          </h2>
+
+        </div>
+
+      </div>
+
+      <div class="profile-section">
+
+        @if (reservation()?.passagerPhotoUrl) {
+
+        <img
+          [src]="getPhotoUrl(reservation()?.passagerPhotoUrl)"
+          [alt]="
+                  reservation()?.passagerPrenom +
+                  ' ' +
+                  reservation()?.passagerNom
+                "
+          class="profile-avatar"
+        />
+
+        } @else {
+
+        <div class="profile-avatar avatar-placeholder">
+          {{ getPassengerInitials() }}
+        </div>
+
+        }
+
+        <div class="profile-info">
+
+          <h3>
+            {{ reservation()?.passagerPrenom }}
+            {{ reservation()?.passagerNom }}
+          </h3>
+
+          <span>
+              {{ reservation()?.passagerEmail || '-' }}
+            </span>
+
+        </div>
+
+      </div>
+
+      <div class="info-grid">
+
+        <div class="info-item">
+
+            <span class="label">
+              Identifiant
+            </span>
+
+          <strong>
+            {{ reservation()?.passagerId || '-' }}
+          </strong>
+
+        </div>
+
+        <div class="info-item">
+
+            <span class="label">
+              Téléphone
+            </span>
+
+          <strong>
+            {{ reservation()?.passagerTelephone || '-' }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         CHAUFFEUR
+    =================================================== -->
+
+    <section class="detail-card">
+
+      <div class="card-header">
+
+        <div>
+
+            <span class="card-eyebrow">
+              CHAUFFEUR
+            </span>
+
+          <h2>
+            Informations du chauffeur
+          </h2>
+
+        </div>
+
+      </div>
+
+      <div class="profile-section">
+
+        @if (reservation()?.chauffeurPhotoUrl) {
+
+        <img
+          [src]="getPhotoUrl(reservation()?.chauffeurPhotoUrl)"
+          [alt]="
+                  reservation()?.chauffeurPrenom +
+                  ' ' +
+                  reservation()?.chauffeurNom
+                "
+          class="profile-avatar"
+        />
+
+        } @else {
+
+        <div class="profile-avatar avatar-placeholder">
+          {{ getDriverInitials() }}
+        </div>
+
+        }
+
+        <div class="profile-info">
+
+          <h3>
+            {{ reservation()?.chauffeurPrenom }}
+            {{ reservation()?.chauffeurNom }}
+          </h3>
+
+          <span>
+              {{ reservation()?.chauffeurEmail || '-' }}
+            </span>
+
+        </div>
+
+      </div>
+
+      <div class="info-grid">
+
+        <div class="info-item">
+
+            <span class="label">
+              Identifiant
+            </span>
+
+          <strong>
+            {{ reservation()?.chauffeurId || '-' }}
+          </strong>
+
+        </div>
+
+        <div class="info-item">
+
+            <span class="label">
+              Email
+            </span>
+
+          <strong>
+            {{ reservation()?.chauffeurEmail || '-' }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         TRAJET
+    =================================================== -->
+
+    <section class="detail-card full-width">
+
+      <div class="card-header">
+
+        <div>
+
+            <span class="card-eyebrow">
+              TRAJET
+            </span>
+
+          <h2>
+            Informations du trajet
+          </h2>
+
+        </div>
+
+        <span class="trip-id">
+            ID :
+            {{ reservation()?.trajetId || '-' }}
+          </span>
+
+      </div>
+
+      <div class="route-display">
+
+        <div class="location-block">
+
+          <div class="location-dot departure"></div>
+
+          <div>
+
+              <span class="label">
+                Départ
+              </span>
+
+            <h3>
+              {{ reservation()?.villeDepart || '-' }}
+            </h3>
+
+            <p>
+              {{ reservation()?.adresseDepart || '-' }}
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="route-line">
+          <span></span>
+        </div>
+
+        <div class="location-block">
+
+          <div class="location-dot destination"></div>
+
+          <div>
+
+              <span class="label">
+                Destination
+              </span>
+
+            <h3>
+              {{ reservation()?.villeDestination || '-' }}
+            </h3>
+
+            <p>
+              {{ reservation()?.adresseDestination || '-' }}
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         DETAILS RESERVATION
+    =================================================== -->
+
+    <section class="detail-card">
+
+      <div class="card-header">
+
+        <div>
+
+            <span class="card-eyebrow">
+              RÉSERVATION
+            </span>
+
+          <h2>
+            Informations
+          </h2>
+
+        </div>
+
+      </div>
+
+      <div class="info-list">
+
+        <div class="info-row">
+
+            <span>
+              Statut
+            </span>
+
+          <span
+            class="status-badge"
+            [class]="
+                getStatusClass(
+                  reservation()!.statut
+                )
+              "
+          >
+              {{
+                getStatusLabel(
+                  reservation()!.statut
+                )
+              }}
+            </span>
+
+        </div>
+
+        <div class="info-row">
+
+            <span>
+              Nombre de places
+            </span>
+
+          <strong>
+            {{ reservation()?.nombrePlaces }}
+            place{{
+            reservation()?.nombrePlaces! > 1
+            ? 's'
+            : ''
+            }}
+          </strong>
+
+        </div>
+
+        <div class="info-row">
+
+            <span>
+              Prix du trajet
+            </span>
+
+          <strong class="price">
+            {{ formatPrice(reservation()?.prix) }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         DEPART
+    =================================================== -->
+
+    <section class="detail-card">
+
+      <div class="card-header">
+
+        <div>
+
+            <span class="card-eyebrow">
+              DÉPART
+            </span>
+
+          <h2>
+            Date et heure
+          </h2>
+
+        </div>
+
+      </div>
+
+      <div class="departure-highlight">
+
+        <div class="calendar-icon">
+          📅
+        </div>
+
+        <div>
+
+            <span>
+              Date de départ
+            </span>
+
+          <strong>
+            {{
+            formatDate(
+            reservation()?.dateDepart
+            )
+            }}
+          </strong>
+
+        </div>
+
+      </div>
+
+      <div class="time-highlight">
+
+        <div class="clock-icon">
+          🕐
+        </div>
+
+        <div>
+
+            <span>
+              Heure de départ
+            </span>
+
+          <strong>
+            {{
+            formatTime(
+            reservation()?.heureDepart
+            )
+            }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         HISTORIQUE
+    =================================================== -->
+
+    <section class="detail-card full-width">
+
+      <div class="card-header">
+
+        <div>
+
+            <span class="card-eyebrow">
+              HISTORIQUE
+            </span>
+
+          <h2>
+            Informations système
+          </h2>
+
+        </div>
+
+      </div>
+
+      <div class="history-grid">
+
+        <div class="history-item">
+
+            <span>
+              Date de création
+            </span>
+
+          <strong>
+            {{
+            formatDateTime(
+            reservation()?.dateCreation
+            )
+            }}
+          </strong>
+
+        </div>
+
+        <div class="history-item">
+
+            <span>
+              Dernière modification
+            </span>
+
+          <strong>
+            {{
+            formatDateTime(
+            reservation()?.dateModification
+            )
+            }}
+          </strong>
+
+        </div>
+
+        <div class="history-item">
+
+            <span>
+              ID réservation
+            </span>
+
+          <strong class="break-id">
+            {{ reservation()?.idReservation }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+  }
+
+</div>

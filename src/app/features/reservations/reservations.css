@@ -1,0 +1,599 @@
+.reservations-page {
+  padding: 32px;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: #7b2cff;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+}
+
+.page-header h1 {
+  margin: 0;
+  color: #0c1230;
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.page-header p {
+  margin: 8px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.total-badge {
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: #f3efff;
+  color: #7b2cff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* ==========================================================
+   FILTRES
+========================================================== */
+
+.filters-card {
+  margin-bottom: 24px;
+  padding: 24px;
+  border: 1px solid #e7e9f2;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 4px 18px rgba(12, 18, 48, 0.05);
+}
+
+.filters-header {
+  margin-bottom: 20px;
+}
+
+.filters-header h2 {
+  margin: 0;
+  color: #0c1230;
+  font-size: 18px;
+}
+
+.filters-header p {
+  margin: 5px 0 0;
+  color: #7a8091;
+  font-size: 13px;
+}
+
+.filters-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.form-group label {
+  color: #34394f;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid #dfe2eb;
+  border-radius: 9px;
+  outline: none;
+  background: #ffffff;
+  color: #20253a;
+  font-size: 13px;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease,
+  box-shadow 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #7b2cff;
+  box-shadow: 0 0 0 3px rgba(123, 44, 255, 0.1);
+}
+
+.filter-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-primary,
+.btn-secondary {
+  min-height: 42px;
+  padding: 0 18px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn-primary {
+  border: none;
+  background: #7b2cff;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background: #6820dc;
+}
+
+.btn-secondary {
+  border: 1px solid #dfe2eb;
+  background: #ffffff;
+  color: #4b5165;
+}
+
+.btn-secondary:hover {
+  background: #f7f8fb;
+}
+
+/* ==========================================================
+   ERREUR
+========================================================== */
+
+.error-message {
+  margin-bottom: 20px;
+  padding: 14px 16px;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-size: 14px;
+}
+
+/* ==========================================================
+   LOADING
+========================================================== */
+
+.loading-state {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  border: 1px solid #e7e9f2;
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.spinner {
+  width: 34px;
+  height: 34px;
+  border: 3px solid #e8e2ff;
+  border-top-color: #7b2cff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.loading-state p {
+  margin: 0;
+  color: #777d90;
+  font-size: 14px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==========================================================
+   TABLE
+========================================================== */
+
+.table-card {
+  overflow: hidden;
+  border: 1px solid #e7e9f2;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 4px 18px rgba(12, 18, 48, 0.05);
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  min-width: 1450px;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #f8f9fc;
+}
+
+th {
+  padding: 15px 16px;
+  border-bottom: 1px solid #e7e9f2;
+  color: #6c7285;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-align: left;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+td {
+  padding: 15px 16px;
+  border-bottom: 1px solid #f0f1f5;
+  color: #33384b;
+  font-size: 13px;
+  vertical-align: middle;
+}
+
+tbody tr:hover {
+  background: #fafaff;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ==========================================================
+   PERSONNES
+========================================================== */
+
+.person-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 210px;
+}
+
+.avatar {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ede7ff;
+  color: #7b2cff;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.person-info {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.person-info strong {
+  overflow: hidden;
+  color: #22273b;
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.person-info span {
+  overflow: hidden;
+  color: #8a8fa0;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ==========================================================
+   RESERVATION
+========================================================== */
+
+.reservation-id strong {
+  color: #7b2cff;
+  font-size: 12px;
+  word-break: break-all;
+}
+
+/* ==========================================================
+   TRAJET
+========================================================== */
+
+.route-cell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 210px;
+  flex-wrap: wrap;
+}
+
+.route-cell strong {
+  color: #252a3d;
+  font-size: 12px;
+}
+
+.route-arrow {
+  color: #7b2cff;
+  font-weight: 800;
+}
+
+.route-cell small {
+  width: 100%;
+  color: #9398a8;
+  font-size: 10px;
+}
+
+/* ==========================================================
+   DEPART
+========================================================== */
+
+.departure-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.departure-cell strong {
+  color: #272c40;
+  font-size: 12px;
+}
+
+.departure-cell span {
+  color: #858b9c;
+  font-size: 11px;
+}
+
+/* ==========================================================
+   PLACES / PRIX
+========================================================== */
+
+.places-badge {
+  display: inline-block;
+  padding: 5px 9px;
+  border-radius: 7px;
+  background: #f4f5f8;
+  color: #555b6d;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.price {
+  color: #0c1230;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.date-text {
+  color: #73798b;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+/* ==========================================================
+   STATUT
+========================================================== */
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.status-pending {
+  background: #fff7df;
+  color: #a16207;
+}
+
+.status-confirmed {
+  background: #e9f9ef;
+  color: #15803d;
+}
+
+.status-cancelled {
+  background: #feecec;
+  color: #b91c1c;
+}
+
+.status-completed {
+  background: #eeeaff;
+  color: #6d28d9;
+}
+
+/* ==========================================================
+   ACTION
+========================================================== */
+
+.btn-detail {
+  padding: 7px 12px;
+  border: 1px solid #ded6ff;
+  border-radius: 8px;
+  background: #f7f4ff;
+  color: #7b2cff;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: 0.2s ease;
+}
+
+.btn-detail:hover {
+  background: #7b2cff;
+  color: #ffffff;
+}
+
+/* ==========================================================
+   EMPTY
+========================================================== */
+
+.empty-state {
+  padding: 70px 20px !important;
+  text-align: center;
+}
+
+.empty-icon {
+  margin-bottom: 10px;
+  font-size: 34px;
+}
+
+.empty-state strong {
+  display: block;
+  color: #34394f;
+  font-size: 15px;
+}
+
+.empty-state p {
+  margin: 7px 0 0;
+  color: #8a8fa0;
+  font-size: 13px;
+}
+
+/* ==========================================================
+   PAGINATION
+========================================================== */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px;
+  border-top: 1px solid #eef0f5;
+}
+
+.pagination-btn,
+.page-number {
+  border: 1px solid #dfe2eb;
+  background: #ffffff;
+  color: #4e5467;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.pagination-btn {
+  padding: 9px 13px;
+  border-radius: 8px;
+}
+
+.pagination-btn:hover:not(:disabled),
+.page-number:hover {
+  border-color: #cdbfff;
+  background: #f7f4ff;
+  color: #7b2cff;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.page-numbers {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.page-number {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+}
+
+.page-number.active {
+  border-color: #7b2cff;
+  background: #7b2cff;
+  color: #ffffff;
+}
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media (max-width: 1100px) {
+
+  .reservations-page {
+    padding: 24px;
+  }
+
+  .filters-grid {
+    grid-template-columns:
+      repeat(2, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+
+  .reservations-page {
+    padding: 16px;
+  }
+
+  .page-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .page-header h1 {
+    font-size: 26px;
+  }
+
+  .filters-card {
+    padding: 18px;
+  }
+
+  .filters-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-actions {
+    justify-content: stretch;
+    flex-direction: column;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+  }
+
+  .pagination {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .page-numbers {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}

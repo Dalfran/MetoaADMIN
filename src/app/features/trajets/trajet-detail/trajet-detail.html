@@ -1,0 +1,559 @@
+<div class="page-container">
+
+  <!-- HEADER -->
+  <div class="page-header">
+
+    <button
+      type="button"
+      class="btn-back"
+      (click)="goBack()"
+    >
+      ← Retour aux trajets
+    </button>
+
+    @if (trajet()) {
+
+    <div class="header-content">
+
+      <div>
+          <span class="eyebrow">
+            DÉTAIL DU TRAJET
+          </span>
+
+        <h1>
+          {{ trajet()!.villeDepart }}
+          →
+          {{ trajet()!.villeDestination }}
+        </h1>
+
+        <p>
+          ID :
+          <strong>
+            {{ trajet()!.idTrajet }}
+          </strong>
+        </p>
+      </div>
+
+      <span
+        class="status-badge"
+        [class]="
+            getStatusClass(
+              trajet()!.statut
+            )
+          "
+      >
+          {{
+            getStatusLabel(
+              trajet()!.statut
+            )
+          }}
+        </span>
+
+    </div>
+
+    }
+
+  </div>
+
+  <!-- LOADING -->
+  @if (loading()) {
+
+  <div class="loading-container">
+
+    <div class="loader"></div>
+
+    <p>
+      Chargement du trajet...
+    </p>
+
+  </div>
+
+  }
+
+  <!-- ERROR -->
+  @if (!loading() && errorMessage()) {
+
+  <div class="error-card">
+
+    <div class="error-icon">
+      ⚠️
+    </div>
+
+    <h2>
+      Impossible de charger le trajet
+    </h2>
+
+    <p>
+      {{ errorMessage() }}
+    </p>
+
+    <button
+      type="button"
+      class="btn-back-error"
+      (click)="goBack()"
+    >
+      Retour aux trajets
+    </button>
+
+  </div>
+
+  }
+
+  <!-- CONTENU -->
+  @if (!loading() && trajet()) {
+
+  <div class="content-grid">
+
+    <!-- =========================
+         ITINÉRAIRE
+    ========================== -->
+
+    <section class="info-card route-card">
+
+      <div class="card-header">
+
+        <div class="card-icon">
+          🛣️
+        </div>
+
+        <div>
+          <h2>
+            Itinéraire
+          </h2>
+
+          <p>
+            Informations sur le parcours
+          </p>
+        </div>
+
+      </div>
+
+      <div class="route-container">
+
+        <!-- DÉPART -->
+        <div class="route-item">
+
+          <div class="route-marker departure">
+            <span></span>
+          </div>
+
+          <div class="route-details">
+
+              <span class="route-label">
+                DÉPART
+              </span>
+
+            <strong>
+              {{ trajet()!.villeDepart }}
+            </strong>
+
+            <span>
+                {{
+                  trajet()!.adresseDepart || 'Adresse non renseignée'
+                }}
+              </span>
+
+          </div>
+
+        </div>
+
+        <div class="route-line"></div>
+
+        <!-- DESTINATION -->
+        <div class="route-item">
+
+          <div class="route-marker destination">
+            <span></span>
+          </div>
+
+          <div class="route-details">
+
+              <span class="route-label">
+                DESTINATION
+              </span>
+
+            <strong>
+              {{ trajet()!.villeDestination }}
+            </strong>
+
+            <span>
+                {{
+                  trajet()!.adresseDestination || 'Adresse non renseignée'
+                }}
+              </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =========================
+         CHAUFFEUR
+    ========================== -->
+
+    <section class="info-card">
+
+      <div class="card-header">
+
+        <div class="card-icon">
+          👤
+        </div>
+
+        <div>
+          <h2>
+            Chauffeur
+          </h2>
+
+          <p>
+            Conducteur associé au trajet
+          </p>
+        </div>
+
+      </div>
+
+      <div class="driver-profile">
+
+        @if (
+        getDriverPhotoUrl(
+        trajet()!.chauffeurPhotoUrl
+        )
+        ) {
+
+        <img
+          class="driver-photo"
+          [src]="
+                getDriverPhotoUrl(
+                  trajet()!.chauffeurPhotoUrl
+                )
+              "
+          [alt]="
+                trajet()!.chauffeurPrenom +
+                ' ' +
+                trajet()!.chauffeurNom
+              "
+        />
+
+        } @else {
+
+        <div class="driver-avatar">
+          {{
+          getDriverInitials(
+          trajet()!
+          )
+          }}
+        </div>
+
+        }
+
+        <div class="driver-main">
+
+          <h3>
+            {{ trajet()!.chauffeurPrenom }}
+            {{ trajet()!.chauffeurNom }}
+          </h3>
+
+          <span>
+              {{ trajet()!.chauffeurEmail || 'Email non renseigné' }}
+            </span>
+
+        </div>
+
+      </div>
+
+      <div class="detail-list">
+
+        <div class="detail-row">
+
+            <span>
+              Identifiant chauffeur
+            </span>
+
+          <strong>
+            {{
+            trajet()!.chauffeurId || '—'
+            }}
+          </strong>
+
+        </div>
+
+        <div class="detail-row">
+
+            <span>
+              Email
+            </span>
+
+          <strong>
+            {{
+            trajet()!.chauffeurEmail || '—'
+            }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =========================
+         DÉPART
+    ========================== -->
+
+    <section class="info-card">
+
+      <div class="card-header">
+
+        <div class="card-icon">
+          📅
+        </div>
+
+        <div>
+          <h2>
+            Départ
+          </h2>
+
+          <p>
+            Date et heure prévues
+          </p>
+        </div>
+
+      </div>
+
+      <div class="departure-info">
+
+        <div class="big-date">
+
+            <span>
+              DATE
+            </span>
+
+          <strong>
+            {{
+            formatDate(
+            trajet()!.dateDepart
+            )
+            }}
+          </strong>
+
+        </div>
+
+        <div class="big-time">
+
+            <span>
+              HEURE
+            </span>
+
+          <strong>
+            {{
+            formatTime(
+            trajet()!.heureDepart
+            )
+            }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =========================
+         PLACES & PRIX
+    ========================== -->
+
+    <section class="info-card">
+
+      <div class="card-header">
+
+        <div class="card-icon">
+          💺
+        </div>
+
+        <div>
+          <h2>
+            Places et tarif
+          </h2>
+
+          <p>
+            Capacité et prix du trajet
+          </p>
+        </div>
+
+      </div>
+
+      <div class="stats-grid">
+
+        <div class="stat-box">
+
+            <span class="stat-label">
+              Places totales
+            </span>
+
+          <strong>
+            {{
+            trajet()!.nombrePlaces
+            }}
+          </strong>
+
+        </div>
+
+        <div class="stat-box available">
+
+            <span class="stat-label">
+              Places disponibles
+            </span>
+
+          <strong>
+            {{
+            trajet()!.placesDisponibles
+            }}
+          </strong>
+
+        </div>
+
+        <div class="stat-box price-box">
+
+            <span class="stat-label">
+              Prix
+            </span>
+
+          <strong>
+            {{
+            formatPrice(
+            trajet()!.prix
+            )
+            }}
+            FCFA
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =========================
+         DESCRIPTION
+    ========================== -->
+
+    <section class="info-card full-width">
+
+      <div class="card-header">
+
+        <div class="card-icon">
+          📝
+        </div>
+
+        <div>
+          <h2>
+            Description
+          </h2>
+
+          <p>
+            Informations complémentaires
+          </p>
+        </div>
+
+      </div>
+
+      <div class="description">
+
+        @if (trajet()!.description) {
+
+        <p>
+          {{ trajet()!.description }}
+        </p>
+
+        } @else {
+
+        <p class="empty-description">
+          Aucune description fournie pour ce trajet.
+        </p>
+
+        }
+
+      </div>
+
+    </section>
+
+    <!-- =========================
+         INFORMATIONS SYSTÈME
+    ========================== -->
+
+    <section class="info-card full-width">
+
+      <div class="card-header">
+
+        <div class="card-icon">
+          🕐
+        </div>
+
+        <div>
+          <h2>
+            Informations système
+          </h2>
+
+          <p>
+            Historique du trajet
+          </p>
+        </div>
+
+      </div>
+
+      <div class="system-grid">
+
+        <div>
+
+            <span>
+              ID du trajet
+            </span>
+
+          <strong>
+            {{ trajet()!.idTrajet }}
+          </strong>
+
+        </div>
+
+        <div>
+
+            <span>
+              Créé le
+            </span>
+
+          <strong>
+            {{
+            formatDateTime(
+            trajet()!.dateCreation
+            )
+            }}
+          </strong>
+
+        </div>
+
+        <div>
+
+            <span>
+              Dernière modification
+            </span>
+
+          <strong>
+            {{
+            formatDateTime(
+            trajet()!.dateModification
+            )
+            }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+  }
+
+</div>

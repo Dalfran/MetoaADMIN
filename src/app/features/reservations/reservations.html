@@ -1,0 +1,562 @@
+<div class="reservations-page">
+
+  <!-- ======================================================
+       HEADER
+  ======================================================= -->
+
+  <div class="page-header">
+
+    <div>
+      <span class="eyebrow">ADMINISTRATION</span>
+
+      <h1>Réservations</h1>
+
+      <p>
+        Supervision et consultation des réservations METOA.
+      </p>
+    </div>
+
+    <div class="total-badge">
+      {{ totalElements() }} réservation(s)
+    </div>
+
+  </div>
+
+
+  <!-- ======================================================
+       FILTRES
+  ======================================================= -->
+
+  <section class="filters-card">
+
+    <div class="filters-header">
+
+      <div>
+        <h2>Recherche</h2>
+
+        <p>
+          Recherchez une réservation selon plusieurs critères.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="filters-grid">
+
+      <div class="form-group">
+
+        <label for="passagerId">
+          ID Passager
+        </label>
+
+        <input
+          id="passagerId"
+          type="text"
+          [(ngModel)]="passagerId"
+          placeholder="Identifiant du passager"
+        />
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="trajetId">
+          ID Trajet
+        </label>
+
+        <input
+          id="trajetId"
+          type="text"
+          [(ngModel)]="trajetId"
+          placeholder="Identifiant du trajet"
+        />
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="chauffeurId">
+          ID Chauffeur
+        </label>
+
+        <input
+          id="chauffeurId"
+          type="text"
+          [(ngModel)]="chauffeurId"
+          placeholder="Identifiant du chauffeur"
+        />
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="statut">
+          Statut
+        </label>
+
+        <select
+          id="statut"
+          [(ngModel)]="statut"
+        >
+
+          <option value="">
+            Tous les statuts
+          </option>
+
+          @for (status of statusOptions; track status) {
+
+          <option [value]="status">
+            {{ getStatusLabel(status) }}
+          </option>
+
+          }
+
+        </select>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="dateCreation">
+          Date de création
+        </label>
+
+        <input
+          id="dateCreation"
+          type="date"
+          [(ngModel)]="dateCreation"
+        />
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="dateDepart">
+          Date de départ
+        </label>
+
+        <input
+          id="dateDepart"
+          type="date"
+          [(ngModel)]="dateDepart"
+        />
+
+      </div>
+
+    </div>
+
+
+    <div class="filter-actions">
+
+      <button
+        type="button"
+        class="btn-primary"
+        (click)="search()"
+      >
+        <span>⌕</span>
+        Rechercher
+      </button>
+
+      <button
+        type="button"
+        class="btn-secondary"
+        (click)="resetFilters()"
+      >
+        Réinitialiser
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- ======================================================
+       ERREUR
+  ======================================================= -->
+
+  @if (errorMessage()) {
+
+  <div class="error-message">
+    {{ errorMessage() }}
+  </div>
+
+  }
+
+
+  <!-- ======================================================
+       CHARGEMENT
+  ======================================================= -->
+
+  @if (loading()) {
+
+  <div class="loading-state">
+
+    <div class="spinner"></div>
+
+    <p>
+      Chargement des réservations...
+    </p>
+
+  </div>
+
+  }
+
+
+  <!-- ======================================================
+       TABLE
+  ======================================================= -->
+
+  @if (!loading()) {
+
+  <section class="table-card">
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+        <tr>
+
+          <th>Réservation</th>
+
+          <th>Passager</th>
+
+          <th>Trajet</th>
+
+          <th>Chauffeur</th>
+
+          <th>Départ</th>
+
+          <th>Places</th>
+
+          <th>Prix</th>
+
+          <th>Statut</th>
+
+          <th>Créée le</th>
+
+          <th>Action</th>
+
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        @for (
+        reservation of reservations();
+        track reservation.idReservation
+        ) {
+
+        <tr>
+
+          <!-- RESERVATION -->
+
+          <td>
+
+            <div class="reservation-id">
+
+              <strong>
+                #{{ reservation.idReservation }}
+              </strong>
+
+            </div>
+
+          </td>
+
+
+          <!-- PASSAGER -->
+
+          <td>
+
+            <div class="person-cell">
+
+              @if (reservation.passagerPhotoUrl) {
+
+              <img
+                [src]="getPhotoUrl(reservation.passagerPhotoUrl)"
+                [alt]="
+                  reservation.passagerPrenom +
+                  ' ' +
+                  reservation.passagerNom
+                "
+                class="avatar"
+              />
+
+              } @else {
+
+              <div class="avatar avatar-placeholder">
+                {{ getPassengerInitials(reservation) }}
+              </div>
+
+              }
+
+              <div class="person-info">
+
+                <strong>
+                  {{ reservation.passagerPrenom }}
+                  {{ reservation.passagerNom }}
+                </strong>
+
+                <span>
+                  {{ reservation.passagerEmail || '-' }}
+                </span>
+
+              </div>
+
+            </div>
+
+          </td>
+
+
+          <!-- TRAJET -->
+
+          <td>
+
+            <div class="route-cell">
+
+              <strong>
+                {{ reservation.villeDepart || '-' }}
+              </strong>
+
+              <span class="route-arrow">
+                →
+              </span>
+
+              <strong>
+                {{ reservation.villeDestination || '-' }}
+              </strong>
+
+              <small>
+                ID :
+                {{ reservation.trajetId || '-' }}
+              </small>
+
+            </div>
+
+          </td>
+
+
+          <!-- CHAUFFEUR -->
+
+          <td>
+
+            <div class="person-cell">
+
+              @if (reservation.chauffeurPhotoUrl) {
+
+              <img
+                [src]="getPhotoUrl(reservation.chauffeurPhotoUrl)"
+                [alt]="
+                  reservation.chauffeurPrenom +
+                  ' ' +
+                  reservation.chauffeurNom
+                "
+                class="avatar"
+              />
+
+              } @else {
+
+              <div class="avatar avatar-placeholder">
+                {{ getDriverInitials(reservation) }}
+              </div>
+
+              }
+
+              <div class="person-info">
+
+                <strong>
+                  {{ reservation.chauffeurPrenom }}
+                  {{ reservation.chauffeurNom }}
+                </strong>
+
+                <span>
+                  {{ reservation.chauffeurEmail || '-' }}
+                </span>
+
+              </div>
+
+            </div>
+
+          </td>
+
+
+          <!-- DEPART -->
+
+          <td>
+
+            <div class="departure-cell">
+
+              <strong>
+                {{ formatDate(reservation.dateDepart) }}
+              </strong>
+
+              <span>
+                {{ formatTime(reservation.heureDepart) }}
+              </span>
+
+            </div>
+
+          </td>
+
+
+          <!-- PLACES -->
+
+          <td>
+
+            <span class="places-badge">
+              {{ reservation.nombrePlaces }}
+              place{{ reservation.nombrePlaces > 1 ? 's' : '' }}
+            </span>
+
+          </td>
+
+
+          <!-- PRIX -->
+
+          <td>
+
+            <strong class="price">
+              {{ formatPrice(reservation.prix) }}
+            </strong>
+
+          </td>
+
+
+          <!-- STATUT -->
+
+          <td>
+
+            <span
+              class="status-badge"
+              [class]="getStatusClass(reservation.statut)"
+            >
+              {{ getStatusLabel(reservation.statut) }}
+            </span>
+
+          </td>
+
+
+          <!-- CREATION -->
+
+          <td>
+
+            <span class="date-text">
+              {{ formatDateTime(reservation.dateCreation) }}
+            </span>
+
+          </td>
+
+
+          <!-- ACTION -->
+
+          <td>
+
+            <button
+              type="button"
+              class="btn-detail"
+              (click)="viewReservation(reservation)"
+            >
+              Voir
+            </button>
+
+          </td>
+
+        </tr>
+
+        } @empty {
+
+        <tr>
+
+          <td
+            colspan="10"
+            class="empty-state"
+          >
+
+            <div class="empty-icon">
+              📭
+            </div>
+
+            <strong>
+              Aucune réservation trouvée
+            </strong>
+
+            <p>
+              Aucune réservation ne correspond aux critères.
+            </p>
+
+          </td>
+
+        </tr>
+
+        }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <!-- ==================================================
+         PAGINATION
+    =================================================== -->
+
+    @if (totalPages() > 0) {
+
+    <div class="pagination">
+
+      <button
+        type="button"
+        class="pagination-btn"
+        [disabled]="currentPage() === 0"
+        (click)="previousPage()"
+      >
+        ← Précédent
+      </button>
+
+
+      <div class="page-numbers">
+
+        @for (page of getPages(); track page) {
+
+        <button
+          type="button"
+          class="page-number"
+          [class.active]="page === currentPage()"
+          (click)="goToPage(page)"
+        >
+          {{ page + 1 }}
+        </button>
+
+        }
+
+      </div>
+
+
+      <button
+        type="button"
+        class="pagination-btn"
+        [disabled]="
+          currentPage() >= totalPages() - 1
+        "
+        (click)="nextPage()"
+      >
+        Suivant →
+      </button>
+
+    </div>
+
+    }
+
+  </section>
+
+  }
+
+</div>

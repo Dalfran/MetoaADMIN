@@ -213,4 +213,22 @@ export class AuthService {
       return false;
     }
   }
+
+  getCurrentUser(): AdminAuthUser | null {
+    if (typeof window === 'undefined') {
+      return null;
+    }
+
+    const user = localStorage.getItem('metoa_user');
+
+    if (!user) {
+      return null;
+    }
+
+    try {
+      return JSON.parse(user) as AdminAuthUser;
+    } catch {
+      return null;
+    }
+  }
 }

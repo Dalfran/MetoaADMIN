@@ -1,0 +1,579 @@
+
+.reservation-detail-page {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.page-header {
+  margin-bottom: 28px;
+}
+
+.back-button {
+  margin-bottom: 20px;
+  padding: 9px 14px;
+  border: 1px solid #dfe2eb;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #555b6d;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.back-button:hover {
+  border-color: #cdbfff;
+  background: #f7f4ff;
+  color: #7b2cff;
+}
+
+.header-content {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.eyebrow,
+.card-eyebrow {
+  display: block;
+  margin-bottom: 7px;
+  color: #7b2cff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+
+.header-content h1 {
+  margin: 0;
+  color: #0c1230;
+  font-size: 30px;
+  font-weight: 800;
+  word-break: break-all;
+}
+
+.header-content p {
+  margin: 7px 0 0;
+  color: #7a8091;
+  font-size: 14px;
+}
+
+/* ==========================================================
+   STATUT
+========================================================== */
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.status-pending {
+  background: #fff7df;
+  color: #a16207;
+}
+
+.status-confirmed {
+  background: #e9f9ef;
+  color: #15803d;
+}
+
+.status-cancelled {
+  background: #feecec;
+  color: #b91c1c;
+}
+
+.status-completed {
+  background: #eeeaff;
+  color: #6d28d9;
+}
+
+/* ==========================================================
+   CONTENT
+========================================================== */
+
+.content-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.detail-card {
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid #e7e9f2;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 4px 18px rgba(12, 18, 48, 0.05);
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+/* ==========================================================
+   CARD HEADER
+========================================================== */
+
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 22px;
+}
+
+.card-header h2 {
+  margin: 0;
+  color: #0c1230;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.trip-id {
+  max-width: 280px;
+  color: #8a8fa0;
+  font-size: 11px;
+  word-break: break-all;
+}
+
+/* ==========================================================
+   PROFIL
+========================================================== */
+
+.profile-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eef0f5;
+}
+
+.profile-avatar {
+  width: 68px;
+  height: 68px;
+  flex: 0 0 68px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ede7ff;
+  color: #7b2cff;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.profile-info {
+  min-width: 0;
+}
+
+.profile-info h3 {
+  margin: 0 0 5px;
+  color: #22273b;
+  font-size: 17px;
+}
+
+.profile-info span {
+  color: #7d8395;
+  font-size: 13px;
+  word-break: break-word;
+}
+
+/* ==========================================================
+   INFORMATIONS
+========================================================== */
+
+.info-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  color: #858b9c;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.info-item strong {
+  color: #303549;
+  font-size: 12px;
+  word-break: break-word;
+}
+
+/* ==========================================================
+   TRAJET
+========================================================== */
+
+.route-display {
+  display: grid;
+  grid-template-columns:
+    1fr 100px 1fr;
+  align-items: center;
+  gap: 15px;
+}
+
+.location-block {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.location-dot {
+  width: 13px;
+  height: 13px;
+  flex: 0 0 13px;
+  margin-top: 4px;
+  border-radius: 50%;
+}
+
+.location-dot.departure {
+  background: #7b2cff;
+  box-shadow: 0 0 0 5px #eeeaff;
+}
+
+.location-dot.destination {
+  background: #ec1d83;
+  box-shadow: 0 0 0 5px #fce6f0;
+}
+
+.location-block h3 {
+  margin: 5px 0;
+  color: #22273b;
+  font-size: 18px;
+}
+
+.location-block p {
+  margin: 0;
+  color: #7d8395;
+  font-size: 12px;
+}
+
+.route-line {
+  position: relative;
+  height: 2px;
+  background: #dedfea;
+}
+
+.route-line span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: #7b2cff;
+}
+
+/* ==========================================================
+   RESERVATION INFO
+========================================================== */
+
+.info-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 14px 0;
+  border-bottom: 1px solid #eef0f5;
+}
+
+.info-row:first-child {
+  padding-top: 0;
+}
+
+.info-row:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.info-row > span:first-child {
+  color: #73798b;
+  font-size: 13px;
+}
+
+.info-row strong {
+  color: #292e42;
+  font-size: 13px;
+  text-align: right;
+}
+
+.price {
+  color: #7b2cff !important;
+}
+
+/* ==========================================================
+   DATE / HEURE
+========================================================== */
+
+.departure-highlight,
+.time-highlight {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 14px;
+  border-radius: 11px;
+}
+
+.departure-highlight {
+  margin-bottom: 12px;
+  background: #f7f4ff;
+}
+
+.time-highlight {
+  background: #fff1f7;
+}
+
+.calendar-icon,
+.clock-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 40px;
+  border-radius: 10px;
+  background: #ffffff;
+  font-size: 18px;
+}
+
+.departure-highlight > div:last-child,
+.time-highlight > div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.departure-highlight span,
+.time-highlight span {
+  color: #777d90;
+  font-size: 11px;
+}
+
+.departure-highlight strong,
+.time-highlight strong {
+  color: #292e42;
+  font-size: 14px;
+}
+
+/* ==========================================================
+   HISTORIQUE
+========================================================== */
+
+.history-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.history-item {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 15px;
+  border-radius: 10px;
+  background: #f8f9fc;
+}
+
+.history-item span {
+  color: #858b9c;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.history-item strong {
+  color: #303549;
+  font-size: 12px;
+}
+
+.break-id {
+  word-break: break-all;
+}
+
+/* ==========================================================
+   LOADING
+========================================================== */
+
+.loading-state {
+  min-height: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  border: 1px solid #e7e9f2;
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #e8e2ff;
+  border-top-color: #7b2cff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.loading-state p {
+  margin: 0;
+  color: #777d90;
+  font-size: 14px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==========================================================
+   ERREUR
+========================================================== */
+
+.error-state {
+  display: flex;
+  min-height: 300px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  padding: 30px;
+  border: 1px solid #fecaca;
+  border-radius: 16px;
+  background: #fef2f2;
+  text-align: center;
+}
+
+.error-icon {
+  font-size: 34px;
+}
+
+.error-state strong {
+  color: #991b1b;
+  font-size: 16px;
+}
+
+.error-state p {
+  margin: 0 0 8px;
+  color: #b91c1c;
+  font-size: 13px;
+}
+
+.btn-primary {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 9px;
+  background: #7b2cff;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: #6820dc;
+}
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media (max-width: 950px) {
+
+  .reservation-detail-page {
+    padding: 24px;
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .full-width {
+    grid-column: auto;
+  }
+
+  .route-display {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .route-line {
+    width: 2px;
+    height: 35px;
+    margin-left: 6px;
+  }
+
+  .route-line span {
+    top: 50%;
+    left: 50%;
+  }
+
+  .history-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 650px) {
+
+  .reservation-detail-page {
+    padding: 16px;
+  }
+
+  .header-content {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .header-content h1 {
+    font-size: 24px;
+  }
+
+  .detail-card {
+    padding: 18px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-header {
+    flex-direction: column;
+  }
+
+  .trip-id {
+    max-width: 100%;
+  }
+}

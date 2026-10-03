@@ -1,0 +1,965 @@
+<div class="page-container">
+
+  <!-- ========================================================= -->
+  <!-- HEADER -->
+  <!-- ========================================================= -->
+
+  <div class="page-header">
+
+    <button
+      type="button"
+      class="back-button"
+      (click)="goBack()"
+    >
+      ← Retour aux chauffeurs
+    </button>
+
+  </div>
+
+
+  <!-- ========================================================= -->
+  <!-- LOADING PRINCIPAL -->
+  <!-- ========================================================= -->
+
+  @if (loading()) {
+
+  <div class="loading-state">
+
+    <div class="loader"></div>
+
+    <p>
+      Chargement du chauffeur...
+    </p>
+
+  </div>
+
+  }
+
+
+  <!-- ========================================================= -->
+  <!-- ERREUR PRINCIPALE -->
+  <!-- ========================================================= -->
+
+  @if (!loading() && errorMessage()) {
+
+  <div class="error-state">
+
+    <div class="error-icon">
+      ⚠️
+    </div>
+
+    <h2>
+      Une erreur est survenue
+    </h2>
+
+    <p>
+      {{ errorMessage() }}
+    </p>
+
+    <button
+      type="button"
+      class="back-button"
+      (click)="goBack()"
+    >
+      Retour aux chauffeurs
+    </button>
+
+  </div>
+
+  }
+
+
+  <!-- ========================================================= -->
+  <!-- PROFIL CHAUFFEUR -->
+  <!-- ========================================================= -->
+
+  @if (!loading() && driver()) {
+
+  <div class="driver-profile">
+
+
+    <!-- ===================================================== -->
+    <!-- HEADER PROFIL / COVER -->
+    <!-- ===================================================== -->
+
+    <section class="profile-header">
+
+      <div class="profile-cover"></div>
+
+      <div class="profile-content">
+
+        <!-- AVATAR -->
+
+        <div class="profile-avatar">
+
+          @if (getPhotoUrl(driver()!.photoUrl)) {
+
+          <img
+            [src]="getPhotoUrl(driver()!.photoUrl)!"
+            [alt]="driver()!.prenom + ' ' + driver()!.nom"
+          >
+
+          } @else {
+
+          <div class="avatar-initials">
+            {{ getInitials(driver()!) }}
+          </div>
+
+          }
+
+        </div>
+
+
+        <!-- INFORMATIONS PRINCIPALES -->
+
+        <div class="profile-main">
+
+          <h1>
+            {{ driver()!.prenom }}
+            {{ driver()!.nom }}
+          </h1>
+
+          <p class="profile-email">
+            {{ driver()!.email }}
+          </p>
+
+          <div class="profile-badges">
+
+              <span
+                class="status-badge"
+                [class.actif]="driver()!.statusUser === 'ACTIF'"
+                [class.suspendu]="driver()!.statusUser === 'SUSPENDUE'"
+                [class.bloque]="driver()!.statusUser === 'BLOQUER'"
+              >
+                {{ getStatusLabel(driver()!.statusUser) }}
+              </span>
+
+            <span class="driver-badge">
+                🏅 {{ getBadgeLabel(driver()!.badge) }}
+              </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================== -->
+    <!-- CONTENU -->
+    <!-- ===================================================== -->
+
+    <div class="content-grid">
+
+
+      <!-- =================================================== -->
+      <!-- INFORMATIONS PERSONNELLES -->
+      <!-- =================================================== -->
+
+      <section class="info-card">
+
+        <div class="card-header">
+
+          <div class="card-icon">
+            👤
+          </div>
+
+          <div>
+
+            <h2>
+              Informations personnelles
+            </h2>
+
+            <p>
+              Informations du compte utilisateur
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="info-grid">
+
+          <div class="info-item">
+
+              <span class="label">
+                Prénom
+              </span>
+
+            <strong>
+              {{ driver()!.prenom }}
+            </strong>
+
+          </div>
+
+
+          <div class="info-item">
+
+              <span class="label">
+                Nom
+              </span>
+
+            <strong>
+              {{ driver()!.nom }}
+            </strong>
+
+          </div>
+
+
+          <div class="info-item">
+
+              <span class="label">
+                Email
+              </span>
+
+            <strong>
+              {{ driver()!.email }}
+            </strong>
+
+          </div>
+
+
+          <div class="info-item">
+
+              <span class="label">
+                Téléphone
+              </span>
+
+            <strong>
+              {{ driver()!.telephone || 'Non renseigné' }}
+            </strong>
+
+          </div>
+
+
+          <div class="info-item">
+
+              <span class="label">
+                Ville
+              </span>
+
+            <strong>
+              {{ driver()!.ville || 'Non renseignée' }}
+            </strong>
+
+          </div>
+
+
+          <div class="info-item">
+
+              <span class="label">
+                ID utilisateur
+              </span>
+
+            <strong class="small-value">
+              {{ driver()!.userId }}
+            </strong>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================== -->
+      <!-- PROFIL CONDUCTEUR -->
+      <!-- =================================================== -->
+
+      <section class="info-card">
+
+        <div class="card-header">
+
+          <div class="card-icon">
+            🚗
+          </div>
+
+          <div>
+
+            <h2>
+              Profil conducteur
+            </h2>
+
+            <p>
+              Informations spécifiques au conducteur
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="info-grid">
+
+          <div class="info-item">
+
+              <span class="label">
+                Adresse
+              </span>
+
+            <strong>
+              {{ driver()!.adresse || 'Non renseignée' }}
+            </strong>
+
+          </div>
+
+
+          <div class="info-item">
+
+              <span class="label">
+                Véhicule
+              </span>
+
+            <strong>
+              {{ driver()!.vehicule || 'Non renseigné' }}
+            </strong>
+
+          </div>
+
+
+          <div class="info-item">
+
+              <span class="label">
+                Profil actif
+              </span>
+
+            @if (driver()!.actif === true) {
+
+            <span class="profile-active">
+                  ✓ Actif
+                </span>
+
+            } @else if (driver()!.actif === false) {
+
+            <span class="profile-inactive">
+                  ✕ Inactif
+                </span>
+
+            } @else {
+
+            <strong>
+              Non renseigné
+            </strong>
+
+            }
+
+          </div>
+
+
+          <div class="info-item">
+
+              <span class="label">
+                Badge
+              </span>
+
+            <strong>
+              🏅 {{ getBadgeLabel(driver()!.badge) }}
+            </strong>
+
+          </div>
+
+
+          <div class="info-item full-width">
+
+              <span class="label">
+                Bio
+              </span>
+
+            <p class="bio">
+              {{ driver()!.bio || 'Aucune biographie renseignée.' }}
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================== -->
+      <!-- STATISTIQUES -->
+      <!-- =================================================== -->
+
+      <section class="info-card stats-card">
+
+        <div class="card-header">
+
+          <div class="card-icon">
+            📊
+          </div>
+
+          <div>
+
+            <h2>
+              Statistiques
+            </h2>
+
+            <p>
+              Activité du conducteur
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="stats-grid">
+
+          <!-- NOTE -->
+
+          <div class="stat-box">
+
+              <span class="stat-icon">
+                ⭐
+              </span>
+
+            <strong>
+              {{
+              driver()!.noteMoyenne !== null &&
+              driver()!.noteMoyenne !== undefined
+              ? (driver()!.noteMoyenne | number:'1.1-1')
+              : '—'
+              }}
+            </strong>
+
+            <span>
+                Note moyenne
+              </span>
+
+          </div>
+
+
+          <!-- AVIS -->
+
+          <div class="stat-box">
+
+              <span class="stat-icon">
+                💬
+              </span>
+
+            <strong>
+              {{ driver()!.totalAvis ?? 0 }}
+            </strong>
+
+            <span>
+                Avis
+              </span>
+
+          </div>
+
+
+          <!-- TRAJETS -->
+
+          <div class="stat-box">
+
+              <span class="stat-icon">
+                🚗
+              </span>
+
+            <strong>
+              {{ driver()!.nombreTrajetsEffectues ?? 0 }}
+            </strong>
+
+            <span>
+                Trajets effectués
+              </span>
+
+          </div>
+
+
+          <!-- TAUX ACCEPTATION -->
+
+          <div class="stat-box">
+
+              <span class="stat-icon">
+                📈
+              </span>
+
+            <strong>
+
+              @if (
+              driver()!.tauxAcceptation !== null &&
+              driver()!.tauxAcceptation !== undefined
+              ) {
+
+              {{ driver()!.tauxAcceptation }}%
+
+              } @else {
+
+              —
+
+              }
+
+            </strong>
+
+            <span>
+                Taux d'acceptation
+              </span>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================== -->
+      <!-- DOCUMENTS CHAUFFEUR -->
+      <!-- =================================================== -->
+
+      <section class="info-card documents-card">
+
+        <div class="card-header">
+
+          <div class="card-icon">
+            📄
+          </div>
+
+          <div>
+
+            <h2>
+              Documents du chauffeur
+            </h2>
+
+            <p>
+              Documents administratifs déposés par le conducteur
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- MESSAGE DE SUCCÈS -->
+        <!-- ================================================= -->
+
+        @if (documentActionSuccess()) {
+
+        <div class="action-success">
+          ✅ {{ documentActionSuccess() }}
+        </div>
+
+        }
+
+
+        <!-- ================================================= -->
+        <!-- CHARGEMENT DOCUMENTS -->
+        <!-- ================================================= -->
+
+        @if (documentsLoading()) {
+
+        <div class="documents-loading">
+
+          <div class="small-loader"></div>
+
+          <span>
+                Chargement des documents...
+              </span>
+
+        </div>
+
+        }
+
+
+        <!-- ================================================= -->
+        <!-- ERREUR DOCUMENTS -->
+        <!-- ================================================= -->
+
+        @if (!documentsLoading() && documentsError()) {
+
+        <div class="documents-error">
+
+          ⚠️
+          {{ documentsError() }}
+
+        </div>
+
+        }
+
+
+        <!-- ================================================= -->
+        <!-- LISTE DOCUMENTS -->
+        <!-- ================================================= -->
+
+        @if (!documentsLoading() && !documentsError()) {
+
+        @if (documents().length > 0) {
+
+        <div class="documents-list">
+
+          @for (
+          document of documents();
+          track document.documentId
+          ) {
+
+          <div class="document-item">
+
+
+            <!-- ======================================= -->
+            <!-- ICÔNE -->
+            <!-- ======================================= -->
+
+            <div class="document-icon">
+              📄
+            </div>
+
+
+            <!-- ======================================= -->
+            <!-- INFORMATIONS -->
+            <!-- ======================================= -->
+
+            <div class="document-info">
+
+              <strong>
+                {{ document.nom }}
+              </strong>
+
+              <span>
+                        Type : {{ document.type }}
+                      </span>
+
+              <span>
+                        Déposé le :
+                        {{
+                          document.dateUpload
+                            ? (
+                                document.dateUpload
+                                | date:'dd/MM/yyyy à HH:mm'
+                              )
+                            : '—'
+                        }}
+                      </span>
+
+
+              <!-- MOTIF REJET -->
+
+              @if (document.motifRejet) {
+
+              <span class="rejection-reason">
+                          Motif du rejet :
+                          {{ document.motifRejet }}
+                        </span>
+
+              }
+
+            </div>
+
+
+            <!-- ======================================= -->
+            <!-- STATUT -->
+            <!-- ======================================= -->
+
+            <div class="document-status">
+
+                      <span
+                        class="document-status-badge"
+                        [class.pending]="document.statutVerification === 'EN_ATTENTE'"
+                        [class.approved]="document.statutVerification === 'APPROUVE'"
+                        [class.rejected]="document.statutVerification === 'REJETE'"
+                      >
+                        {{
+                          getDocumentStatusLabel(
+                            document.statutVerification
+                          )
+                        }}
+                      </span>
+
+            </div>
+
+
+            <!-- ======================================= -->
+            <!-- ACTIONS -->
+            <!-- ======================================= -->
+
+            <div class="document-actions">
+
+              <!-- VOIR -->
+
+              <button
+                type="button"
+                class="btn-view"
+                (click)="openDocument(document)"
+              >
+                👁️ Voir
+              </button>
+
+
+              <!-- APPROUVER / REJETER -->
+
+              @if (document.statutVerification === 'EN_ATTENTE') {
+
+              <button
+                type="button"
+                class="btn-approve"
+                [disabled]="documentActionLoading()"
+                (click)="approveDocument(document)"
+              >
+                @if (documentActionLoading()) {
+                Traitement...
+                } @else {
+                ✅ Approuver
+                }
+              </button>
+
+
+              <button
+                type="button"
+                class="btn-reject"
+                [disabled]="documentActionLoading()"
+                (click)="openRejectModal(document)"
+              >
+                ❌ Rejeter
+              </button>
+
+              }
+
+            </div>
+
+          </div>
+
+          }
+
+        </div>
+
+        } @else {
+
+        <!-- ============================================= -->
+        <!-- AUCUN DOCUMENT -->
+        <!-- ============================================= -->
+
+        <div class="no-documents">
+
+          <div class="no-documents-icon">
+            📂
+          </div>
+
+          <strong>
+            Aucun document
+          </strong>
+
+          <span>
+                  Ce chauffeur n'a pas encore déposé de document.
+                </span>
+
+        </div>
+
+        }
+
+        }
+
+      </section>
+
+
+      <!-- =================================================== -->
+      <!-- INFORMATIONS DU PROFIL -->
+      <!-- =================================================== -->
+
+      <section class="info-card">
+
+        <div class="card-header">
+
+          <div class="card-icon">
+            📅
+          </div>
+
+          <div>
+
+            <h2>
+              Informations du profil
+            </h2>
+
+            <p>
+              Historique du profil conducteur
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="info-grid">
+
+          <div class="info-item">
+
+              <span class="label">
+                ID profil conducteur
+              </span>
+
+            <strong class="small-value">
+              {{ driver()!.profileConducteurId || '—' }}
+            </strong>
+
+          </div>
+
+
+          <div class="info-item">
+
+              <span class="label">
+                Création du profil
+              </span>
+
+            <strong>
+              {{
+              driver()!.dateCreationProfile
+              ? (
+              driver()!.dateCreationProfile
+              | date:'dd/MM/yyyy'
+              )
+              : '—'
+              }}
+            </strong>
+
+          </div>
+
+
+          <div class="info-item">
+
+              <span class="label">
+                Dernière modification
+              </span>
+
+            <strong>
+              {{
+              driver()!.dateModificationProfile
+              ? (
+              driver()!.dateModificationProfile
+              | date:'dd/MM/yyyy'
+              )
+              : '—'
+              }}
+            </strong>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </div>
+
+  }
+
+
+  <!-- ========================================================= -->
+  <!-- MODAL REJET DOCUMENT -->
+  <!-- ========================================================= -->
+
+  @if (showRejectModal()) {
+
+  <div class="modal-overlay">
+
+    <div class="reject-modal">
+
+
+      <!-- HEADER MODAL -->
+
+      <div class="modal-header">
+
+        <div>
+
+          <h3>
+            Rejeter le document
+          </h3>
+
+          @if (selectedDocument()) {
+
+          <p>
+            {{ selectedDocument()!.nom }}
+          </p>
+
+          }
+
+        </div>
+
+
+        <button
+          type="button"
+          class="modal-close"
+          [disabled]="documentActionLoading()"
+          (click)="closeRejectModal()"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <!-- CORPS MODAL -->
+
+      <div class="modal-body">
+
+        <label for="rejectReason">
+          Motif du rejet
+        </label>
+
+        <textarea
+          id="rejectReason"
+          rows="5"
+          [value]="rejectReason()"
+          (input)="rejectReason.set($any($event.target).value)"
+          placeholder="Expliquez pourquoi ce document est rejeté..."
+        ></textarea>
+
+
+        @if (documentActionError()) {
+
+        <div class="action-error">
+          {{ documentActionError() }}
+        </div>
+
+        }
+
+      </div>
+
+
+      <!-- FOOTER MODAL -->
+
+      <div class="modal-footer">
+
+        <button
+          type="button"
+          class="btn-cancel"
+          [disabled]="documentActionLoading()"
+          (click)="closeRejectModal()"
+        >
+          Annuler
+        </button>
+
+
+        <button
+          type="button"
+          class="btn-confirm-reject"
+          [disabled]="
+              documentActionLoading() ||
+              rejectReason().trim().length < 3
+            "
+          (click)="confirmRejectDocument()"
+        >
+
+          @if (documentActionLoading()) {
+
+          Rejet en cours...
+
+          } @else {
+
+          ❌ Confirmer le rejet
+
+          }
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  }
+
+</div>

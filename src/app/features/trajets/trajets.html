@@ -1,0 +1,521 @@
+<div class="page-container">
+
+  <!-- HEADER -->
+  <div class="page-header">
+
+    <div>
+      <h1>Gestion des trajets</h1>
+
+      <p>
+        Consultez et supervisez les trajets de la plateforme.
+      </p>
+    </div>
+
+    <div class="total-badge">
+      {{ totalElements() }} trajet{{ totalElements() > 1 ? 's' : '' }}
+    </div>
+
+  </div>
+
+  <!-- FILTRES -->
+  <section class="filters-card">
+
+    <div class="filters-header">
+
+      <div>
+        <h2>Recherche et filtres</h2>
+
+        <p>
+          Filtrez les trajets selon vos critères.
+        </p>
+      </div>
+
+      <button
+        type="button"
+        class="btn-reset"
+        (click)="resetFilters()"
+      >
+        ↻ Réinitialiser
+      </button>
+
+    </div>
+
+    <div class="filters-grid">
+
+      <!-- VILLE DÉPART -->
+      <div class="form-group">
+
+        <label for="villeDepart">
+          Ville de départ
+        </label>
+
+        <input
+          id="villeDepart"
+          type="text"
+          [(ngModel)]="villeDepart"
+          placeholder="Ex : Yaoundé"
+          (keyup.enter)="search()"
+        />
+
+      </div>
+
+      <!-- VILLE DESTINATION -->
+      <div class="form-group">
+
+        <label for="villeDestination">
+          Ville de destination
+        </label>
+
+        <input
+          id="villeDestination"
+          type="text"
+          [(ngModel)]="villeDestination"
+          placeholder="Ex : Douala"
+          (keyup.enter)="search()"
+        />
+
+      </div>
+
+      <!-- CHAUFFEUR -->
+      <div class="form-group">
+
+        <label for="chauffeurId">
+          ID du chauffeur
+        </label>
+
+        <input
+          id="chauffeurId"
+          type="text"
+          [(ngModel)]="chauffeurId"
+          placeholder="Identifiant du chauffeur"
+          (keyup.enter)="search()"
+        />
+
+      </div>
+
+      <!-- STATUT -->
+      <div class="form-group">
+
+        <label for="statut">
+          Statut
+        </label>
+
+        <select
+          id="statut"
+          [(ngModel)]="statut"
+        >
+
+          <option value="">
+            Tous les statuts
+          </option>
+
+          @for (item of statuts; track item.value) {
+          <option [value]="item.value">
+            {{ item.label }}
+          </option>
+          }
+
+        </select>
+
+      </div>
+
+      <!-- DATE -->
+      <div class="form-group">
+
+        <label for="dateDepart">
+          Date de départ
+        </label>
+
+        <input
+          id="dateDepart"
+          type="date"
+          [(ngModel)]="dateDepart"
+        />
+
+      </div>
+
+      <!-- BOUTON -->
+      <div class="search-container">
+
+        <button
+          type="button"
+          class="btn-search"
+          (click)="search()"
+          [disabled]="loading()"
+        >
+          🔎 Rechercher
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ERREUR -->
+  @if (errorMessage()) {
+
+  <div class="error-message">
+
+    <span>⚠️</span>
+
+    {{ errorMessage() }}
+
+    <button
+      type="button"
+      (click)="loadCurrentPage()"
+    >
+      Réessayer
+    </button>
+
+  </div>
+
+  }
+
+  <!-- CHARGEMENT -->
+  @if (loading()) {
+
+  <div class="loading-container">
+
+    <div class="loader"></div>
+
+    <p>
+      Chargement des trajets...
+    </p>
+
+  </div>
+
+  }
+
+  <!-- TABLEAU -->
+  @if (!loading() && !errorMessage()) {
+
+  @if (trajets().length > 0) {
+
+  <section class="table-card">
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+        <tr>
+
+          <th>Trajet</th>
+
+          <th>Chauffeur</th>
+
+          <th>Départ</th>
+
+          <th>Places</th>
+
+          <th>Prix</th>
+
+          <th>Statut</th>
+
+          <th>Actions</th>
+
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        @for (
+        trajet of trajets();
+        track trajet.idTrajet
+        ) {
+
+        <tr>
+
+          <!-- TRAJET -->
+          <td>
+
+            <div class="route-cell">
+
+              <div class="route-point departure">
+                <span></span>
+              </div>
+
+              <div>
+
+                <strong>
+                  {{ trajet.villeDepart }}
+                </strong>
+
+                <span class="route-arrow">
+                          ↓
+                        </span>
+
+                <strong>
+                  {{ trajet.villeDestination }}
+                </strong>
+
+              </div>
+
+            </div>
+
+          </td>
+
+          <!-- CHAUFFEUR -->
+          <td>
+
+            <div class="driver-cell">
+
+              @if (
+              getDriverPhotoUrl(
+              trajet.chauffeurPhotoUrl
+              )
+              ) {
+
+              <img
+                [src]="getDriverPhotoUrl(
+                            trajet.chauffeurPhotoUrl
+                          )"
+                [alt]="
+                            trajet.chauffeurPrenom +
+                            ' ' +
+                            trajet.chauffeurNom
+                          "
+                class="driver-photo"
+              />
+
+              } @else {
+
+              <div class="driver-avatar">
+                {{
+                getDriverInitials(trajet)
+                }}
+              </div>
+
+              }
+
+              <div class="driver-info">
+
+                <strong>
+                  {{
+                  trajet.chauffeurPrenom
+                  }}
+                  {{
+                  trajet.chauffeurNom
+                  }}
+                </strong>
+
+                <span>
+                          {{
+                            trajet.chauffeurEmail || '—'
+                          }}
+                        </span>
+
+              </div>
+
+            </div>
+
+          </td>
+
+          <!-- DATE -->
+          <td>
+
+            <div class="date-cell">
+
+              <strong>
+                {{
+                formatDate(
+                trajet.dateDepart
+                )
+                }}
+              </strong>
+
+              <span>
+                        {{
+                          formatTime(
+                            trajet.heureDepart
+                          )
+                        }}
+                      </span>
+
+            </div>
+
+          </td>
+
+          <!-- PLACES -->
+          <td>
+
+            <div class="places-cell">
+
+              <strong>
+                {{
+                trajet.placesDisponibles
+                }}
+              </strong>
+
+              <span>
+                        /
+                        {{
+                          trajet.nombrePlaces
+                        }}
+                        disponibles
+                      </span>
+
+            </div>
+
+          </td>
+
+          <!-- PRIX -->
+          <td>
+
+            <strong class="price">
+              {{
+              formatPrice(
+              trajet.prix
+              )
+              }}
+              FCFA
+            </strong>
+
+          </td>
+
+          <!-- STATUT -->
+          <td>
+
+                    <span
+                      class="status-badge"
+                      [class]="
+                        getStatusClass(
+                          trajet.statut
+                        )
+                      "
+                    >
+                      {{
+                        getStatusLabel(
+                          trajet.statut
+                        )
+                      }}
+                    </span>
+
+          </td>
+
+          <!-- ACTION -->
+          <td>
+
+            <button
+              type="button"
+              class="btn-view"
+              (click)="viewTrajet(trajet)"
+            >
+              👁️ Voir
+            </button>
+
+          </td>
+
+        </tr>
+
+        }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+  <!-- PAGINATION -->
+  @if (totalPages() > 1) {
+
+  <div class="pagination">
+
+    <button
+      type="button"
+      class="pagination-arrow"
+      [disabled]="currentPage() === 0"
+      (click)="previousPage()"
+    >
+      ‹
+    </button>
+
+    @for (
+    page of getPaginationPages();
+    track $index
+    ) {
+
+    @if (page === -1) {
+
+    <span class="pagination-dots">
+                …
+              </span>
+
+    } @else {
+
+    <button
+      type="button"
+      class="pagination-number"
+      [class.active]="
+                  currentPage() === page
+                "
+      (click)="goToPage(page)"
+    >
+      {{ page + 1 }}
+    </button>
+
+    }
+
+    }
+
+    <button
+      type="button"
+      class="pagination-arrow"
+      [disabled]="
+              currentPage() === totalPages() - 1
+            "
+      (click)="nextPage()"
+    >
+      ›
+    </button>
+
+  </div>
+
+  }
+
+  <div class="pagination-info">
+
+    Page {{ currentPage() + 1 }}
+    sur {{ totalPages() }}
+
+    —
+    {{ totalElements() }} trajet{{ totalElements() > 1 ? 's' : '' }}
+
+  </div>
+
+  } @else {
+
+  <div class="empty-state">
+
+    <div class="empty-icon">
+      🛣️
+    </div>
+
+    <h3>
+      Aucun trajet trouvé
+    </h3>
+
+    <p>
+      Aucun trajet ne correspond aux critères sélectionnés.
+    </p>
+
+    <button
+      type="button"
+      class="btn-reset-empty"
+      (click)="resetFilters()"
+    >
+      Réinitialiser les filtres
+    </button>
+
+  </div>
+
+  }
+
+  }
+
+</div>

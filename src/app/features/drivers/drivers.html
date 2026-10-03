@@ -1,0 +1,325 @@
+<div class="page-container">
+
+  <!-- HEADER -->
+
+  <div class="page-header">
+
+    <div>
+
+      <h1>
+        Gestion des chauffeurs
+      </h1>
+
+      <p>
+        Consultez et gérez les chauffeurs inscrits sur METOA.
+      </p>
+
+    </div>
+
+    <div class="driver-count">
+      {{ drivers().length }} chauffeur(s)
+    </div>
+
+  </div>
+
+
+  <!-- LOADING -->
+
+  @if (loading()) {
+
+  <div class="loading-state">
+
+    <div class="loader"></div>
+
+    <p>
+      Chargement des chauffeurs...
+    </p>
+
+  </div>
+
+  }
+
+
+  <!-- ERROR -->
+
+  @if (!loading() && errorMessage()) {
+
+  <div class="error-state">
+
+    <span>⚠️</span>
+
+    <p>
+      {{ errorMessage() }}
+    </p>
+
+    <button
+      type="button"
+      (click)="loadDrivers()"
+    >
+      Réessayer
+    </button>
+
+  </div>
+
+  }
+
+
+  <!-- TABLE -->
+
+  @if (!loading() && !errorMessage()) {
+
+  @if (drivers().length > 0) {
+
+  <div class="table-card">
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+        <tr>
+
+          <th>Chauffeur</th>
+
+          <th>Email</th>
+
+          <th>Ville</th>
+
+          <th>Statut</th>
+
+          <th>Badge</th>
+
+          <th>Note</th>
+
+          <th>Trajets</th>
+
+          <th>Taux</th>
+
+          <th>Actions</th>
+
+        </tr>
+
+        </thead>
+
+
+        <tbody>
+
+        @for (
+        driver of drivers();
+        track driver.userId
+        ) {
+
+        <tr>
+
+          <!-- CHAUFFEUR -->
+
+          <td>
+
+            <div class="driver-cell">
+
+              @if (
+              getPhotoUrl(driver.photoUrl)
+              ) {
+
+              <img
+                class="driver-avatar"
+                [src]="getPhotoUrl(driver.photoUrl)!"
+                [alt]="
+                            driver.prenom + ' ' + driver.nom
+                          "
+              >
+
+              } @else {
+
+              <div class="driver-avatar initials">
+
+                {{ getInitials(driver) }}
+
+              </div>
+
+              }
+
+
+              <div class="driver-info">
+
+                <strong>
+                  {{ driver.prenom }}
+                  {{ driver.nom }}
+                </strong>
+
+                @if (driver.telephone) {
+
+                <span>
+                            {{ driver.telephone }}
+                          </span>
+
+                }
+
+              </div>
+
+            </div>
+
+          </td>
+
+
+          <!-- EMAIL -->
+
+          <td>
+            {{ driver.email }}
+          </td>
+
+
+          <!-- VILLE -->
+
+          <td>
+
+            {{ driver.ville || '—' }}
+
+          </td>
+
+
+          <!-- STATUT -->
+
+          <td>
+
+                    <span
+                      class="status-badge"
+                      [class.actif]="
+                        driver.statusUser === 'ACTIF'
+                      "
+                      [class.suspendu]="
+                        driver.statusUser === 'SUSPENDUE'
+                      "
+                      [class.bloque]="
+                        driver.statusUser === 'BLOQUER'
+                      "
+                    >
+                      {{ getStatusLabel(driver.statusUser) }}
+                    </span>
+
+          </td>
+
+
+          <!-- BADGE -->
+
+          <td>
+
+                    <span class="badge-value">
+
+                      🏅
+
+                      {{ getBadgeLabel(driver.badge) }}
+
+                    </span>
+
+          </td>
+
+
+          <!-- NOTE -->
+
+          <td>
+
+            @if (
+            driver.noteMoyenne !== null &&
+            driver.noteMoyenne !== undefined
+            ) {
+
+            <span class="rating">
+
+                        ⭐
+                        {{ driver.noteMoyenne | number:'1.1-1' }}
+
+                      </span>
+
+            } @else {
+
+            <span class="empty-value">
+                        —
+                      </span>
+
+            }
+
+          </td>
+
+
+          <!-- TRAJETS -->
+
+          <td>
+
+            {{ driver.nombreTrajetsEffectues ?? 0 }}
+
+          </td>
+
+
+          <!-- TAUX -->
+
+          <td>
+
+            @if (
+            driver.tauxAcceptation !== null &&
+            driver.tauxAcceptation !== undefined
+            ) {
+
+            {{ driver.tauxAcceptation }}%
+
+            } @else {
+
+            —
+
+            }
+
+          </td>
+
+
+          <!-- ACTION -->
+
+          <td class="actions-cell">
+
+            <a
+              class="view-button"
+              [routerLink]="[
+                        '/admin/drivers',
+                        driver.userId
+                      ]"
+            >
+              👁 Voir
+            </a>
+
+          </td>
+
+        </tr>
+
+        }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+  } @else {
+
+  <div class="empty-state">
+
+    <div class="empty-icon">
+      🚗
+    </div>
+
+    <h2>
+      Aucun chauffeur
+    </h2>
+
+    <p>
+      Aucun chauffeur n'est actuellement enregistré.
+    </p>
+
+  </div>
+
+  }
+
+  }
+
+</div>
